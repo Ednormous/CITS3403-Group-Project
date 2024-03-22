@@ -4,7 +4,7 @@
 | UWA Student ID | Name           | GitHub Username |
 |--------|----------------|-----------------|
 | 23405978 | Edward Wang       | Ednormous         |
-|  |     |       |
+| 23434755 | Wesley Dutton     | wdATuwa           |
 |  |     |       |
 |  |     |       |
 
