@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Amazing Education Login
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+
+    <body>
+
+    <main>
+        <section id="login">
+            <h1>Login Page</h1>
+            <form action="pages/dummy_login.html" method="post">
+
+                <!--Div for username-->
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <!-- Div for password entry-->
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <!--Need to implement login javascript code-->
+                    <button type="submit">Login</button>
+                </div>
+
+                <div class="links">
+                    <!-- Links to reset password or register a new account -->
+                    <a href="pages/forgot-password.html">Forgot Password?</a>
+                    <a href="pages/register.html">Create an Account</a>
+                </div>
+            </form>
+        </section>
+    </main>
+    <!--Need to implement javascript for handling of credentials-->
+    <script src="js/script.js"></script> 
+    </body>
+</html>
