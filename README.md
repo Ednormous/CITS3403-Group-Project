@@ -6,7 +6,7 @@
 | 23405978 | Edward Wang       | Ednormous         |
 | 23434755 | Wesley Dutton     | wdATuwa           |
 | 23401014 | Lucca Sidey    |  Lucca-Sidey     |
-|  |     |       |
+| 23661719 | Joshua Trainer  |  Josh-Trainer    |
 
 ## Application Overview
 
