@@ -3,12 +3,16 @@
 <head>
     <title>Register</title>
 
-    <section id= 'login'>
+    <section id= 'register'>
         <h1>Register Page</h1>
-        <div id="links">
-            <a href="/register">Create an Account</a>
-        </div>
-        
-
+        <form action="/register" method="post">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br>
+            <input type="submit" value="Create an Account">
+        </form>
     </section>
 </html>
