@@ -32,8 +32,10 @@ def login():
         print(password)
         # Query the database for the user
         user = User.query.filter_by(username=username).first()
-        print(user.password)
-        print(check_password_hash(user.password, password))
+        # print("passed user")
+
+        # print(user.password)
+        # print(check_password_hash(user.password, password))
         # If credentials are correct, then redirect
         if user and check_password_hash(user.password, password):
             login_user(user)
