@@ -25,9 +25,10 @@ class User(db.Model, UserMixin):
 #     student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 #     class_id = db.Column(db.Integer, db.ForeignKey('class.class_id'), nullable=False)
 
-# Table to store posts
-# class Communication(db.Model)):
+# # Table to store posts
+# class Communication(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
+#     class_id = db.Column(db.Integer, db.ForeignKey('class.class_id'), nullable=False) # Reference to classes so that forums can be made independent
 #     title = db.Column(db.String(100), nullable=False)
 #     content = db.Column(db.Text(2000), nullable=False) ### Limit the content to 2000 characters
 #     date_posted = db.Column(db.DateTime, nullable=False)

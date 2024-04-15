@@ -1,7 +1,7 @@
 ### Specifies the routes for the application
 
-from flask import request, render_template, flash, redirect, url_for
-from flask_login import login_user, logout_user, login_required
+from flask import request, render_template, flash, redirect, url_for, abort
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from src import app, db
 from src.models import User
@@ -127,7 +127,16 @@ def tutor():
 @login_required
 def admin():
     # Need to implement conditions to check if user is an admin
-    return render_template('admin.html')
+    if current_user.role == 'admin':
+        print(User.role)
+        users = User.query.limit(10).all()
+        return render_template('admin.html', users=users)
+    else:
+        return "You do not have permission to view this page"
+    
+    
+    
+    
 
 @app.route('/student')
 @login_required
@@ -135,3 +144,20 @@ def student():
     # Need to implement conditions to check if user is a student
     return render_template('student.html')
 
+@app.route('/create_user', methods=['POST'])
+def create_user():
+    if not current_user.is_authenticated or current_user.role != 'admin':
+        # Only allow admins to access this route
+        abort(403)
+
+    r_username = request.form.get('username')
+    r_password = request.form.get('username') # Default password is the username
+    r_email = request.form.get('email')
+    r_role = request.form.get('role')
+
+    user = User(username=r_username, password=generate_password_hash(r_password), email=r_email, role=r_role)
+    db.session.add(user)
+    db.session.commit()
+
+    flash('User created successfully.', category='success')
+    return redirect(url_for('admin'))
