@@ -129,15 +129,12 @@ def admin():
     # Need to implement conditions to check if user is an admin
     if current_user.role == 'admin':
         print(User.role)
-        users = User.query.limit(10).all()
+        # users = User.query.limit(10).all()
+        users = User.query.all()
         return render_template('admin.html', users=users)
     else:
         return "You do not have permission to view this page"
     
-    
-    
-    
-
 @app.route('/student')
 @login_required
 def student():
