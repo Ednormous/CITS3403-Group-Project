@@ -82,5 +82,32 @@ def forgot_password():
     return render_template('forgot-password.html')
 
 @app.route('/dummy_login')
+@login_required
 def dummy_login():
     return render_template('dummy_login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+@app.route('/tutor')
+@login_required
+def tutor():
+    # Need to implement conditions to check if user is a tutor
+    return render_template('tutor.html')
+
+@app.route('/student')
+@login_required
+def student():
+    # Need to implement conditions to check if user is a student
+    return render_template('student.html')
+
+@app.route('/admin')
+@login_required
+def admin():
+    # Need to implement conditions to check if user is an admin
+    return render_template('admin.html')
+
+
