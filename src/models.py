@@ -12,11 +12,6 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=True)
     role = db.Column(db.String(20), nullable=False)
-    
-# A role table to store the roles of the users
-class Role(db.Model): 
-    id = db.Column(db.Integer, primary_key=True)
-    role = db.Column(db.String(20), nullable=False)
 
 # Table to store classes
 # class Class(db.Model):

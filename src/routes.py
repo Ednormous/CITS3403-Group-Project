@@ -64,7 +64,15 @@ def register():
             # Indicates that the username already exists
             flash('Username already exists. Please choose a different one.', category='error')
         else:
-            user = User(username=retrieved_username, password=generate_password_hash(retrieved_password), email=retrieved_email, role = 'NA')
+            # Check if the email's domain is 'amazingEdu.com.au'
+            domain = retrieved_email.split('@')[-1]
+            print("detected domainn is: ", domain)
+            if domain == '123.com':
+                r_role = 'tutor'
+            else:
+                r_role = 'student' 
+
+            user = User(username=retrieved_username, password=generate_password_hash(retrieved_password), email=retrieved_email, role = r_role)
             db.session.add(user)
             db.session.commit()
 
