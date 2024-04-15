@@ -13,7 +13,37 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=True)
     role = db.Column(db.String(20), nullable=False)
     
-#A role table to store the roles of the users
+# A role table to store the roles of the users
 class Role(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
     role = db.Column(db.String(20), nullable=False)
+
+# Table to store classes
+# class Class(db.Model):
+#     class_id = db.Column(db.Integer, primary_key=True)
+#     class_name = db.Column(db.String(100), nullable=False)
+#     tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+# Table to store enrolments
+# class Enrolment(db.Model):
+#     enrolment_id = db.Column(db.Integer, primary_key=True)
+#     student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+#     class_id = db.Column(db.Integer, db.ForeignKey('class.class_id'), nullable=False)
+
+# Table to store posts
+# class Communication(db.Model)):
+#     id = db.Column(db.Integer, primary_key=True)
+#     title = db.Column(db.String(100), nullable=False)
+#     content = db.Column(db.Text(2000), nullable=False) ### Limit the content to 2000 characters
+#     date_posted = db.Column(db.DateTime, nullable=False)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+# Table to store timetables
+# class Timetable(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     day = db.Column(db.String(20), nullable=False)
+#     time = db.Column(db.String(20), nullable=False)
+#     class_name = db.Column(db.String(100), nullable=False)
+#     tutor = db.Column(db.String(100), nullable=False)
+
+# TODO Create a View for users to individually view their own timetables
