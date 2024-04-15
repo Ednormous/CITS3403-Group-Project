@@ -32,15 +32,32 @@ def login():
         print(password)
         # Query the database for the user
         user = User.query.filter_by(username=username).first()
-        # print("passed user")
 
-        # print(user.password)
-        # print(check_password_hash(user.password, password))
         # If credentials are correct, then redirect
         if user and check_password_hash(user.password, password):
             login_user(user)
-            flash('Login successful.', category='success')
-            return redirect(url_for('dummy_login'))
+            print("user role is: ", user.role)
+
+            # Role == admin
+            if user.role == 'admin':
+                flash('Login successful.', category='success')
+                return redirect(url_for('admin'))
+            
+            # Role == tutor
+            elif user.role == 'tutor':
+                flash('Login successful.', category='success')
+                return redirect(url_for('tutor'))
+            
+            # Role == student
+            elif user.role == 'student':
+                flash('Login successful.', category='success')
+                return redirect(url_for('student'))
+            
+            # Unassigned Role
+            else:
+                # Redirect to another page if the user is not a student
+                flash('Login successful.', category='success')
+                return redirect(url_for('dummy_login'))
         else:
             # Message to indicate user has incorrect credentials
             flash('Login failed. Please check your credentials and try again.')
@@ -106,16 +123,15 @@ def tutor():
     # Need to implement conditions to check if user is a tutor
     return render_template('tutor.html')
 
-@app.route('/student')
-@login_required
-def student():
-    # Need to implement conditions to check if user is a student
-    return render_template('student.html')
-
 @app.route('/admin')
 @login_required
 def admin():
     # Need to implement conditions to check if user is an admin
     return render_template('admin.html')
 
+@app.route('/student')
+@login_required
+def student():
+    # Need to implement conditions to check if user is a student
+    return render_template('student.html')
 
