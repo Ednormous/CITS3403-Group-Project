@@ -1,6 +1,7 @@
 ### This file is the entry point of the application. It initialises the Flask app and the database.
 
 from flask import Flask
+from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from .database import db
@@ -14,6 +15,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 db.init_app(app)
+
+# socket for the message-forums
+socketio = SocketIO(app)
 
 @login_manager.user_loader
 def load_user(id):
