@@ -3,7 +3,8 @@
 from flask import request, render_template, flash, redirect, url_for, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from src import app, db
+from flask_socketio import emit
+from src import app, db, socketio
 from src.models import User
 
 # Homepage
@@ -158,3 +159,11 @@ def create_user():
 
     flash('User created successfully.', category='success')
     return redirect(url_for('admin'))
+
+@app.route('/message_board')
+def message_board():
+    return render_template('message_board.html')
+
+@socketio.on('post_message')
+def handle_message(json, methods=['GET', 'POST']):
+    emit('new_message', json, broadcast=True)
