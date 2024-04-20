@@ -1,18 +1,29 @@
 <!-- this is the template for the message board -->
 
 <html lang="en">
-    <head>
-        <title> Message Borad for CITS .....</title>
+<head>
+    <title> Message Board for CITS....</title>
 
-    </head>
-    <body>
-        <div id="message-board"></div>
+    <!-- This is the javascript library for realtime web socket if anyone is interested -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
 
-        <!-- A form for submitting new messages for the board-->
-        <form id="message-board-form">
-            <input type="text" id="message-board-input" placeholder="Enter your message here...">
-            <button type="submit">Submit Post</button>
-        </form>
+    <script src="{{ url_for('static', filename='js/message_board.js') }}" defer></script>
 
-    </body>
+</head>
+<body>
+    <div id="message-board">
+        <h2>Message Thread</h2>
+        <!-- chat list will be under this title -->
+        <ul id="messages"></ul>
+    </div>
+    <!-- A form for submitting new messages for the board-->
+    <form id="message-board-form">
+        <input type="text" id="message-board-input" placeholder="Enter your message here...">
+        <button type="submit">Submit Post</button>
+    </form>
+
+
+
+</body>
 </html>
+

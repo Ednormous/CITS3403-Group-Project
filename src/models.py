@@ -1,11 +1,13 @@
-### Creating the database models for the application
+# Creating the database models for the application
 
 from .database import db
 from flask_login import UserMixin
-
+from datetime import datetime
 # Creating table for database
 
 # User table to store the user information
+
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -24,6 +26,20 @@ class User(db.Model, UserMixin):
 #     enrolment_id = db.Column(db.Integer, primary_key=True)
 #     student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 #     class_id = db.Column(db.Integer, db.ForeignKey('class.class_id'), nullable=False)
+
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    # reference to the User Class
+    user = db.relationship('User', backref='messages')
+
+    def __repr__(self):
+        return f'<Message "{self.content}" by User ID {self.user_id}>'
+
 
 # # Table to store posts
 # class Communication(db.Model):
