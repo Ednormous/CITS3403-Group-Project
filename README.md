@@ -10,6 +10,12 @@
 
 ## Application Overview
 
+Run:
+
+> pip (or pip3) install -r requirements.txt 
+
+Before running the app.py
+
 The Class Allocation System is a web-based application designed for a tuition center to streamline the process of class management and communication between administrators, tutors, parents, and students. Built using a modern technology stack that includes HTML, CSS, Flask, AJAX, jQuery, Bootstrap, and SQLite, the system offers a responsive, secure, and user-friendly platform.
 
 The core functionality revolves around managing **class schedules**, **providing feedback** and **reports**, **handling enrollment requests**, and **facilitating direct communication between different user roles**. 
