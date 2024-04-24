@@ -14,6 +14,16 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=True)
     role = db.Column(db.String(20), nullable=False)
+    email_verified = db.Column(db.Boolean, nullable=False, default=False)
+
+### TODO Link the user detail table to the user table and allow users to finalise their account details within their account detail.
+
+
+# class user_detail(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+#     firstName = db.Column(db.String(20), nullable=False)
+#     lastName = db.Column(db.String(20), nullable=False)
 
 # Table to store classes
 # class Class(db.Model):

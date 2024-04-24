@@ -3,9 +3,12 @@
 from flask import request, render_template, flash, redirect, url_for, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from flask_mail import Message
 from flask_socketio import emit
-from src import app, db, socketio
+from src import app, db, socketio, mail, s
 from src.models import User
+
 
 # Homepage
 @app.route('/')
@@ -76,6 +79,8 @@ def register():
         retrieved_username = request.form.get('username')
         retrieved_password = request.form.get('password')
         retrieved_email = request.form.get('email')
+        # retrieved_first_name = request.form.get('firstname')
+        # retrieved_last_name = request.form.get('lastname')
 
         existing_user = User.query.filter_by(username=retrieved_username).first()
         if existing_user:
@@ -85,7 +90,7 @@ def register():
             # Check if the email's domain is 'amazingEdu.com.au'
             domain = retrieved_email.split('@')[-1]
             print("detected domainn is: ", domain)
-            if domain == '123.com':
+            if domain == '123.com': ### TODO Make this editable via the admin page
                 r_role = 'tutor'
             else:
                 r_role = 'student' 
@@ -94,13 +99,43 @@ def register():
             db.session.add(user)
             db.session.commit()
 
+            # userDetail = user_detail(user_id=user.id, firstName=retrieved_first_name, lastName=retrieved_last_name)
+            # db.session.add(userDetail)
+            # db.session.commit()
+
             # Indicates regisration was successful
-            flash('Registration successful. Please log in.', category='success')
+            flash('Registration successful.', category='success')
 
             # Redirects user to login page
             # TODO: Prompt user to verify their email address with a verification code
-            return redirect(url_for('login'))
+            token = s.dumps(retrieved_email, salt='email-confirm-salt')
+            confirm_url = url_for('confirm_email', token=token, _external=True)
+
+            # Send email to user
+            msg = Message('Confirm your Email', recipients=[retrieved_email])
+            msg.body = f'Click the link to confirm your email: {confirm_url}'
+            try:
+                mail.send(msg)
+                flash('Please verify your account.', category='success')
+            except Exception as e:
+                print(e)
+                flash('Failed to send email. Please try again later.', category='error')
+                return redirect(url_for('register'))
+            return redirect(url_for(confirm_email))
+    flash('Please fill out the form.', category='error')
     return render_template('register.html')
+
+@app.route('/confirm_email/<token>')
+def confirm_email(token):
+    try:
+        email = s.loads(token, salt='email-confirm-salt', max_age=3600)
+        user = User.query.filter_by(email=email).first()
+        user.email_verified = True
+        db.session.commit()
+        flash('Email confirmed.', category='success')
+    except SignatureExpired:
+        flash('The confirmation link has expired.', category='error')
+    return redirect(url_for('login'))
 
 # Forgot password page
 @app.route('/forgot-password')

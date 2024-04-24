@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>About</title>
-</head>
-<body>
-    <h1>About</h1>
-    <p>Welcome to the about page!</p>
-    <a href="{{url_for('home')}}">Home</a>
-    <a href="{{url_for('contact')}}">Contact</a>
-    <a href="{{url_for('login')}}">Login</a>
-    <a href="{{url_for('register')}}">Register</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Our Tutors - AmazingEdu{% endblock %}
+
+{% block content %}
+    <section>
+        <h1>Our Tutors</h1>
+        <p>Learn more about our mission, vision, and the values that guide our community.</p>
+    </section>
+{% endblock %}

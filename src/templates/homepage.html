@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Homepage</title>
-</head>
-<body>
-    <h1>Home</h1>
-    <p>Welcome to the home page!</p>
-    <!-- <a href="/about">About</a>
-    <a href="/contact">Contact</a>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a> -->
-    <a href="{{url_for('about')}}">About</a>
-    <a href="{{url_for('contact')}}">Contact</a>
-    <a href="{{url_for('login')}}">Login</a>
-    <a href="{{url_for('register')}}">Register</a>
-    <a href="{{url_for('message_board')}}"> Go to Message Board</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Home - Tutition Talk{% endblock %}
+
+{% block content %}
+    <section>
+        <h1>Welcome to Our Learning Community!</h1>
+        <p>Join us to expand your knowledge with the best courses and resources.</p>
+    </section>
+{% endblock %}

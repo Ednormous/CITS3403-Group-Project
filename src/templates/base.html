@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TuitionTalk{% endblock %}</title>
+    <style>
+        
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { background: #333; color: white; padding: 10px 20px; text-align: center; }
+        nav { text-align: center; }
+        nav a { color: white; padding: 0 15px; text-decoration: none; }
+        section { padding: 20px; }
+        footer { background: #333; color: white; padding: 10px 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{url_for('home')}}">Home Page</a>
+            <a href="{{url_for('about')}}">About</a>
+            <a href="{{url_for('contact')}}">Contact</a>
+            <a href="{{url_for('login')}}">Login</a>
+            <a href="{{url_for('register')}}">Register</a>
+            <a href="{{url_for('message_board')}}"> Go to Message Board</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2023 Tuition Talk. All rights reserved.</p>
+    </footer>
+</body>
+</html>

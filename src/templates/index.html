@@ -1,56 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>
-            Login
-        </title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    </head>
+{% extends "base.html" %}
 
-    <body>
+{% block title %}Login{% endblock %}
 
-    <main>
-        <section id="login">
-            <h1>Login Page</h1>
-            <form action="/login" method="post">
-
-                <!--Div for username-->
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-
-                <!-- Div for password entry-->
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-
-                <div class="form-group">
-                    <!--Need to implement login javascript code-->
-                    <button type="submit">Login</button>
-                </div>
-
-                <div class="links">
-                    <!-- Links to reset password or register a new account -->
-                    <a href="/forgot-password">Forgot Password?</a>
-                </div>
-
-                <div class="links">
-                    <!-- Link to register -->
-                    <a href="{{url_for('register')}}"> Don't Have an Account?</a>
-                </div>
-
-                <div class="links">
-                    <!-- Link to homepage -->
-                    <a href="{{url_for('home')}}">Homepage</a>
-                </div>
-            </form>
- 
-        </section>
-    </main>
-    <!--Need to implement javascript for handling of credentials-->
-    <script src="js/script.js"></script> 
-    </body>
-</html>
+{% block content %}
+    <section id="login">
+        <h1>Login Page</h1>
+        <form action="/login" method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Login</button>
+            </div>
+            <div class="links">
+                <a href="/forgot-password">Forgot Password?</a>
+            </div>
+            <div class="links">
+                <a href="{{ url_for('register') }}">Don't Have an Account?</a>
+            </div>
+            <div class="links">
+                <a href="{{ url_for('home') }}">Homepage</a>
+            </div>
+        </form>
+    </section>
+{% endblock %}
