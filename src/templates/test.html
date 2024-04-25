@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation with Logo and Overlap</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .top-header {
+            background-color: #00a0df; /* Light blue background */
+            padding: 10px 20px;
+            color: white;
+            text-align: center; /* Center the content */
+        }
+        .nav-container {
+            display: flex; /* Use flexbox for positioning */
+            justify-content: center; /* Center the items in the container */
+            position: relative; /* Needed for z-index to work */
+            z-index: 2; /* Higher than top-header to overlap */
+        }
+        .logo {
+            flex: 0 0 auto; /* Do not grow or shrink */
+            margin-right: 20px; /* Adjust the distance from the yellow bar */
+            align-self: center; /* Align vertically in the middle */
+        }
+        .nav-bar {
+            background-color: #ffc423; /* Yellow background */
+            width: 70%; /* Relative to the header's width */
+            margin-top: -10px; /* Pulling up to overlap the header */
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: Adds shadow for depth */
+            text-align: center; /* Center the links */
+        }
+        .nav-bar a {
+            color: black;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            display: inline-block; /* Align padding and background correctly */
+            padding: 10px;
+        }
+        /* Rest of the styles */
+    </style>
+</head>
+<body>
+    <div class="top-header">
+        <!-- Content for the light blue header -->
+        Follow us
+        <!-- Social links -->
+    </div>
+    
+    <div class="nav-container">
+        <!-- Logo on the left side -->
+        <div class="logo">
+            <img src="src/assets/tempLogo.png" alt="Logo" style="height: 50px;"> <!-- Adjust size as needed -->
+        </div>
+        
+        <!-- Yellow navigation bar with links -->
+        <div class="nav-bar">
+            <a href="#" class="active">Home</a>
+            <!-- Other links -->
+        </div>
+    </div>
+
+    <!-- Rest of your page content -->
+</body>
+</html>

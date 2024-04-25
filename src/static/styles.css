@@ -1,0 +1,70 @@
+html, body { font-family: Arial, sans-serif; 
+    height: 100vh;
+    display:flex;
+    flex-direction: column;
+    margin: 0; 
+    padding: 0; }
+
+main { flex-grow: 1;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    padding: 0 20px;
+    container:center; 
+}
+
+.top-header {
+    background-color: rgb(84, 161, 93); 
+    height: 80px;
+    padding: 10px 20px;
+    color: white;
+    text-align: center;
+}
+.nav-container {
+    display: flex; /* Use flexbox for positioning */
+    justify-content: center; /* Center the items in the container */
+    position: relative; /* Needed for z-index to work */
+    z-index: 2; /* Higher than top-header to overlap */
+}
+.logo {
+    flex: 0 0 auto; /* Do not grow or shrink */
+    margin-top: -30px;
+    margin-right: -200px; /* Adjust the distance from the yellow bar */
+    align-self: center; /* Align vertically in the middle */
+}
+.nav-bar {
+    background-color: rgb(255, 157, 0); 
+    margin-left: 20%; 
+    width: 60%; 
+    margin-top: -40px; 
+    padding: 30px 10px;
+    box-shadow: 0 2px 5px rgba(142, 133, 133, 0.2); 
+    text-align: center; 
+    border-radius: 8px; 
+}
+.nav-bar a {
+    color: black;
+    text-decoration: none;
+    margin: 0 10px; /* Space between buttons */
+    padding: 10px 15px; /* Padding inside the buttons */
+    border:2px solid rgb(181, 120, 22); /* Yellow border */
+    border-radius: 4px; /* Rounded corners for the buttons */
+    background-color: #ffffff; /* Initial button color */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    display: inline-block; /* Treat the links as blocks for padding and margins */
+    box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+}
+
+.nav-bar a:hover {
+    background-color: rgb(106, 56, 8); /* Darkened button color on hover */
+    border:2px solid rgb(106, 56, 8);
+    color: white; /* White text on hover */
+}
+
+footer { background: rgb(45, 103, 50);  
+    color: white; 
+    padding: 10px 20px; 
+    text-align: center; 
+    margin-top: auto;
+}
+
