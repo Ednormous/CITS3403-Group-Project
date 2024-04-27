@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TuitionTalk{% endblock %}</title>
-    <style>
-        
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-        header { background: #333; color: white; padding: 10px 20px; text-align: center; }
-        nav { text-align: center; }
-        nav a { color: white; padding: 0 15px; text-decoration: none; }
-        section { padding: 20px; }
-        footer { background: #333; color: white; padding: 10px 20px; text-align: center; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles.css') }}">
 </head>
+
 <body>
-    <header>
-        <nav>
+    <div class="top-header">
+         
+    </div>
+    <div class="nav-container">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='/images/tempLogo.png') }}" alt="Logo" style="height: 100px;">
+        </div>
+        <div class="nav-bar">
+            <!-- Button for the links -->
             <a href="{{url_for('home')}}">Home Page</a>
             <a href="{{url_for('about')}}">About</a>
             <a href="{{url_for('contact')}}">Contact</a>
             <a href="{{url_for('login')}}">Login</a>
             <a href="{{url_for('register')}}">Register</a>
             <a href="{{url_for('message_board')}}"> Go to Message Board</a>
-        </nav>
-    </header>
+        </div>
+    </div>
 
     <main>
         {% block content %}
