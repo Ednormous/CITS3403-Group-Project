@@ -38,18 +38,32 @@ class User(db.Model, UserMixin):
 #     class_id = db.Column(db.Integer, db.ForeignKey('class.class_id'), nullable=False)
 
 
+# class Message(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+#     content = db.Column(db.Text, nullable=False)
+#     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+#     # reference to the User Class
+#     user = db.relationship('User', backref='messages')
+
+#     def __repr__(self):
+#         return f'<Message "{self.content}" by User ID {self.user_id}>'
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     content = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    parent_id = db.Column(db.Integer, db.ForeignKey(
+        'message.id'), nullable=True)
 
     # reference to the User Class
     user = db.relationship('User', backref='messages')
+    replies = db.relationship('Message', backref=db.backref(
+        'parent', remote_side=[id]), lazy='dynamic')
 
     def __repr__(self):
         return f'<Message "{self.content}" by User ID {self.user_id}>'
-
 
 # # Table to store posts
 # class Communication(db.Model):
