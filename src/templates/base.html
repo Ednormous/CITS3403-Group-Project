@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}TuitionTalk{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='/styles.css') }}">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}TuitionTalk{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='/styles.css') }}">
+    </head>
 
-<body>
-    <div class="top-header">
-         
-    </div>
-    <div class="nav-container">
-        <div class="logo">
-            <img src="{{ url_for('static', filename='/images/tempLogo.png') }}" alt="Logo" style="height: 100px;">
+    <body>
+        <div class="top-header">
+            
         </div>
-        <div class="nav-bar">
-            <!-- Button for the links -->
-            <a href="{{url_for('home')}}">Home Page</a>
-            <a href="{{url_for('about')}}">About</a>
-            <a href="{{url_for('contact')}}">Contact</a>
-            <a href="{{url_for('login')}}">Login</a>
-            <a href="{{url_for('register')}}">Register</a>
-            <a href="{{url_for('message_board')}}"> Go to Message Board</a>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='/images/tempLogo.png') }}" alt="Logo" style="height: 100px;">
+            </div>
+            <div class="nav-bar">
+                <!-- Button for the links -->
+                <a href="{{url_for('home')}}">Home Page</a>
+                <a href="{{url_for('about')}}">About</a>
+                <a href="{{url_for('contact')}}">Contact</a>
+                <a href="{{url_for('login')}}">Login</a>
+                <a href="{{url_for('register')}}">Register</a>
+                <a href="{{url_for('message_board')}}"> Go to Message Board</a>
+            </div>
         </div>
-    </div>
 
-    <main>
-        {% block content %}
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer>
+            <p>© 2023 Tuition Talk. All rights reserved.</p>
+        </footer>
+    </body>
+    <scipt>
+        {% block scripts %}
         {% endblock %}
-    </main>
-
-    <footer>
-        <p>© 2023 Tuition Talk. All rights reserved.</p>
-    </footer>
-</body>
+    </scipt>
 </html>
