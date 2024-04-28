@@ -1,33 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Message Board for CITS...</title>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
-    <script src="{{ url_for('static', filename='js/message_board.js') }}" defer></script>
-</head>
-<body>
-    <div id="message-board">
-        <h2>Message Thread</h2>
-        <ul id="messages">
-            <!-- Loop through each message and create a list item -->
-            {% for message in messages %}
-                <li data-message-id="{{ message.id }}">
-                    {{ message.user.username }}: {{ message.content }}
-                    <button class="reply-btn" data-message-id="{{ message.id }}">Reply</button>
-                    <div class="replies">
-                        <!-- Optionally, include existing replies here -->
-                    </div>
-                </li>
-            {% endfor %}
+{% extends "base.html" %}
 
-        </ul>
-    </div>
-    <!-- Form for submitting new messages for the board -->
-    <form id="message-board-form">
-        <input type="text" id="message-board-input" placeholder="Enter your message here...">
-        <input type="hidden" id="message-board-parent-id"> <!-- Hidden field for storing parent ID -->
-        <button type="submit">Submit Post</button>
-    </form>
-</body>
-</html>
+{% block title %}Message Board - Tuition Talk{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/message_board.css') }}">
+{% endblock %}
+
+{% block content %}
+<div id="message-board">
+    <h2>Message Thread</h2>
+    <ul id="messages">
+        {% for message in messages %}
+            <li data-message-id="{{ message.id }}">
+                {{ message.user.username }}: {{ message.content }}
+                <button class="reply-btn" data-message-id="{{ message.id }}">Reply</button>
+                <div class="replies">
+                    <!-- Optionally, include existing replies here -->
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<!-- Form for submitting new messages to the board -->
+<form id="message-board-form">
+    <input type="text" id="message-board-input" placeholder="Enter your message here...">
+    <input type="hidden" id="message-board-parent-id"> <!-- Hidden field for storing parent ID -->
+    <button type="submit">Submit Post</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+<script src="{{ url_for('static', filename='js/message_board.js') }}" defer></script>
+{% endblock %}
+
 
