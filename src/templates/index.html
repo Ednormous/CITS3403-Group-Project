@@ -4,10 +4,10 @@
 
 {% block content %}
     <section id="login">
-        <h1>Login Page</h1>
+        <h1>Please enter your details below</h1>
         <form action="/login" method="post">
             <div class="form-group">
-                <label for="username">Username:</label>
+                <label for="username">Username / Email:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
@@ -15,16 +15,13 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <div class="form-group">
-                <button type="submit">Login</button>
+                <button type="submit" class = 'button'>Login</button>
             </div>
             <div class="links">
                 <a href="/forgot-password">Forgot Password?</a>
             </div>
             <div class="links">
                 <a href="{{ url_for('register') }}">Don't Have an Account?</a>
-            </div>
-            <div class="links">
-                <a href="{{ url_for('home') }}">Homepage</a>
             </div>
         </form>
     </section>

@@ -1,3 +1,5 @@
+/* Styling for public base.html */
+
 html, body { font-family: Arial, sans-serif; 
     height: 100vh;
     display:flex;
@@ -68,3 +70,81 @@ footer { background: rgb(45, 103, 50);
     margin-top: auto;
 }
 
+/* 
+ */
+ /* Styling for login and register forms */
+/* 
+ */
+
+#login {
+    max-width: 400px;
+    margin: 2rem auto; 
+    padding: 2rem; 
+    background: #f9f9f9; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    text-align: center; 
+}
+
+#login h1 {
+    color: rgb(84, 161, 93); 
+    margin-bottom: 1rem; 
+}
+
+#register {
+    max-width: 400px; 
+    margin: 2rem auto; 
+    padding: 2rem; 
+    background: #f9f9f9; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center; 
+}
+
+#register h1 {
+    color: rgb(84, 161, 93);
+    margin-bottom: 1rem; 
+}
+
+.form-group {
+    margin-bottom: 1rem; 
+    text-align: left; 
+}
+
+.form-group label {
+    display: block; 
+    color: #333; 
+    margin-bottom: .5rem; 
+}
+
+.form-group input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+
+.button {
+    background-color: rgb(84, 161, 93); 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    text-transform: uppercase; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.button:hover {
+    background-color: rgb(64, 122, 70); 
+}
+
+.links a {
+    color: rgb(84, 161, 93); 
+    text-decoration: none; 
+    transition: color 0.3s; 
+}
+
+.links a:hover {
+    color: rgb(64, 122, 70); 
+}
