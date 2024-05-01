@@ -3,24 +3,14 @@
 {% block title %}Register - TuitionTalk{% endblock %}
 
 {% block content %}
-<section id='register'>
-    <h1>Register Page</h1>
+<section id="register">
+    <h1>Don't have an account? </h1>
+    <h1>Please enter your details below</h1>
     <form action="/register" method="post">
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
         </div>
-
-        <!-- Uncomment to use
-        <div class="form-group">
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstname" required>
-        </div>
-        <div class="form-group">
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="lastname" required>
-        </div>
-        -->
 
         <div class="form-group">
             <label for="password">Password:</label>
@@ -33,11 +23,11 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" value="Create an Account">
+            <button type="submit" class="button">Register</button>
         </div>
     </form>
-    <a href="{{ url_for('home') }}">Homepage</a>
-    <p>Already have an account?</p>
-    <a href="{{ url_for('login') }}">Login</a>
+    <div class="links">
+        <a href="{{ url_for('login') }}">Already have an account?</a>
+    </div>
 </section>
 {% endblock %}
