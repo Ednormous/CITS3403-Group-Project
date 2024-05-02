@@ -10,9 +10,6 @@ from src import app, db, socketio, mail, s
 from src.models import User, Message
 from datetime import datetime
 
-
-
-
 # Homepage
 @app.route('/')
 def home():
@@ -59,12 +56,13 @@ def login():
             # Role == tutor
             elif user.role == 'tutor':
                 flash('Login successful.', category='success')
-                return redirect(url_for('tutor'))
+                return redirect(url_for('tutor', username=user.username))
 
             # Role == student
             elif user.role == 'student':
                 flash('Login successful.', category='success')
-                return redirect(url_for('student'))
+                # print("user name is: ", user.username)
+                return redirect(url_for('student', username=user.username))
 
             # Unassigned Role
             else:
@@ -119,28 +117,33 @@ def register():
 
             # Indicates regisration was successful
             flash('Registration successful.', category='success')
+            return redirect(url_for('login'))
+            # !!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+            # The following does not work
 
-            # Redirects user to login page
-            # TODO: Prompt user to verify their email address with a verification code
-            token = s.dumps(retrieved_email, salt='email-confirm-salt')
-            confirm_url = url_for('confirm_email', token=token, _external=True)
+            # # Redirects user to login page
+            # # TODO: Prompt user to verify their email address with a verification code
+            # token = s.dumps(retrieved_email, salt='email-confirm-salt')
+            # confirm_url = url_for('confirm_email', token=token, _external=True)
 
-            # Send email to user
-            msg = Message('Confirm your Email', recipients=[retrieved_email])
-            msg.body = f'Click the link to confirm your email: {confirm_url}'
-            try:
-                mail.send(msg)
-                flash('Please verify your account.', category='success')
-            except Exception as e:
-                print(e)
-                flash('Failed to send email. Please try again later.',
-                      category='error')
-                return redirect(url_for('register'))
-            return redirect(url_for(confirm_email))
+            # # Send email to user
+            # msg = Message('Confirm your Email', recipients=[retrieved_email])
+            # msg.body = f'Click the link to confirm your email: {confirm_url}'
+            # try:
+            #     mail.send(msg)
+            #     flash('Please verify your account.', category='success')
+            # except Exception as e:
+            #     print(e)
+            #     flash('Failed to send email. Please try again later.',
+            #           category='error')
+            #     return redirect(url_for('register'))
+            # return redirect(url_for(confirm_email))
+
     flash('Please fill out the form.', category='error')
     return render_template('register.html')
 
 
+# The following would probably not be implemented
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
     try:
@@ -174,11 +177,13 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/tutor')
+@app.route('/tutor/<username>')
 @login_required
-def tutor():
-    # Need to implement conditions to check if user is a tutor
-    return render_template('tutor.html')
+def tutor(username):
+    if username != current_user.username and not current_user.is_admin:
+        abort(403)
+    return render_template('tutor.html', user=current_user)
+
 
 
 @app.route('/admin')
@@ -191,15 +196,15 @@ def admin():
         users = User.query.all()
         return render_template('admin.html', users=users)
     else:
-        return "You do not have permission to view this page"
-
-
-@app.route('/student')
+        flash("You do not have permission to view this page")
+        return render_template('login')
+    
+@app.route('/student/<username>')
 @login_required
-def student():
-    # Need to implement conditions to check if user is a student
-    return render_template('student.html')
-
+def student(username):
+    if username != current_user.username and not current_user.is_admin:
+        abort(403)  # Forbidden access if not the user or not an admin
+    return render_template('student.html', user=current_user)
 
 @app.route('/create_user', methods=['POST'])
 def create_user():
@@ -227,6 +232,21 @@ def message_board():
     # Query messages from the database
     messages = Message.query.all()
     return render_template('message_board.html', messages=messages)
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', user=current_user)
+
+@app.route('/timetable')
+@login_required
+def timetable():
+    return render_template('timetable.html')
+
+@app.route('/settings')
+@login_required
+def settings():
+    return render_template('settings.html')
 
 # websocket for the message board
 @socketio.on('post_message')
