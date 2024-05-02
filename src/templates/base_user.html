@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='user.css') }}">
+</head>
+<body>
+    <header>
+        <div class="top-nav">
+            <a href="javascript:void(0);" class="button" data-url="{{ url_for('profile') }}" onclick="loadContent(this)">Profile</a>
+            <a href="{{ url_for('logout') }}" class="button">Logout</a>
+        </div>
+    </header>
+    <div class="container">
+        <aside class="sidebar">
+            <a href="{{ url_for('student', username=current_user.username) }}" class="nav-btn">Welcome</a>
+            <a href="javascript:void(0);" class="nav-btn" data-url="{{ url_for('timetable') }}" onclick="loadContent(this)">Timetable</a>
+            <a href="{{ url_for('message_board') }}" class="nav-btn">Forums</a>
+            <a href="javascript:void(0);" class="nav-btn" data-url="{{ url_for('settings') }}" onclick="loadContent(this)">Settings</a>
+        </aside>
+        <main id="main-content">
+            {% block content %}
+            <!-- Dynamic content loaded here based on the button pressed -->
+            {% endblock %}
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='user.js') }}"></script>
+</body>
+</html>

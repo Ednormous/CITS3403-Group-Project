@@ -1,0 +1,70 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.header, .container, .top-nav, .sidebar, main {
+    box-sizing: border-box;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: rgb(20, 91, 29);
+    color: white;
+}
+
+.profile-btn, .logout-btn {
+    cursor: pointer;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
+.container {
+    display: flex;
+    height: calc(100% - 40px); /* Adjust based on header height */
+}
+
+.sidebar {
+    flex-basis: 200px;
+    background-color: rgb(29, 154, 73);
+    color: white;
+    padding: 20px;
+}
+
+.button, .nav-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #004885;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover, .nav-btn:hover {
+    background-color: #003366;
+}
+
+
+#main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: rgba(226, 231, 211, 0.494);
+}
+
+/* Clearfix for floated elements */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
