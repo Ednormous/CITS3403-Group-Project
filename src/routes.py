@@ -11,6 +11,8 @@ from src.models import User, Message
 from datetime import datetime
 
 # Homepage
+
+
 @app.route('/')
 def home():
     return render_template('homepage.html')
@@ -185,7 +187,6 @@ def tutor(username):
     return render_template('tutor.html', user=current_user)
 
 
-
 @app.route('/admin')
 @login_required
 def admin():
@@ -198,13 +199,15 @@ def admin():
     else:
         flash("You do not have permission to view this page")
         return render_template('login')
-    
+
+
 @app.route('/student/<username>')
 @login_required
 def student(username):
     if username != current_user.username and not current_user.is_admin:
         abort(403)  # Forbidden access if not the user or not an admin
     return render_template('student.html', user=current_user)
+
 
 @app.route('/create_user', methods=['POST'])
 def create_user():
@@ -227,30 +230,54 @@ def create_user():
     return redirect(url_for('admin'))
 
 
+# @app.route('/message_board')
+# def message_board():
+#     # Query messages from the database
+#     messages = Message.query.all()
+
+#     return render_template('message_board.html', messages=messages, class_id=request.args.get('class_id'))
+
 @app.route('/message_board')
 def message_board():
-    # Query messages from the database
-    messages = Message.query.all()
-    return render_template('message_board.html', messages=messages)
+    class_id = request.args.get('class_id')
+    if not class_id:
+        return "Class ID is required", 400  # Return an error or redirect as needed
+
+    # Assuming 'unit_id' in 'Message' corresponds to 'class_id'
+    messages = Message.query.filter_by(unit_id=class_id).all()
+
+    return render_template('message_board.html', messages=messages, class_id=class_id)
+
 
 @app.route('/profile')
 @login_required
 def profile():
     return render_template('profile.html', user=current_user)
 
+
 @app.route('/timetable')
 @login_required
 def timetable():
     return render_template('timetable.html')
+
 
 @app.route('/settings')
 @login_required
 def settings():
     return render_template('settings.html')
 
+
+@app.route('/forums')
+@login_required
+def forums():
+    return render_template('forums.html')
+
 # websocket for the message board
+
+
 @socketio.on('post_message')
 def handle_message(data):
+    print('anything')
     if not current_user.is_authenticated:
         emit('error', {'error': 'User not authenticated'})
         return False
@@ -258,18 +285,37 @@ def handle_message(data):
     user_id = current_user.id
     text = data['text']
     parent_id = data.get('parent_id')
+    message_label = data['message_label']
+    unitCode = data['unitCode']
+    print(message_label)
 
     try:
-        new_message = Message(user_id=user_id, content=text, parent_id=parent_id, timestamp=datetime.utcnow())
+        new_message = Message(user_id=user_id, content=text,
+                              timestamp=datetime.utcnow(),
+                              parent_id=parent_id,
+                              image_url=None,
+                              label=message_label,
+                              unit_id=unitCode)
         db.session.add(new_message)
         db.session.commit()
         emit('new_message', {
-            'text': text, 
+            'text': text,
+            'label': label,  # Make sure label is being sent
+            'parent_id': parent_id,
             'user_id': user_id,
-            'parent_id': parent_id, 
+            'username': current_user.username,  # Ensure username is also sent
             'message_id': new_message.id
         }, broadcast=True)
     except Exception as e:
         db.session.rollback()
         print(f"Error saving message: {e}")
         emit('error', {'error': str(e)})
+
+
+# @app.route('/units')
+# def unit_view():
+#     from src.models import Units  # Import your Units model
+#     all_units = Units.query.all()  # Fetch all units from the database
+#     return render_template('base_user.html', all_units=all_units)
+#  use the unit code i have and look at the uinit code in the database to get the unit id,
+        # then parse unit id into insert
