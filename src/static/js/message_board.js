@@ -1,59 +1,52 @@
-// this Js doc is the client-side for the message board/
+// // this Js doc is the server-side for the message board/
 
-
+// listens for the document to fully load
 document.addEventListener('DOMContentLoaded', () => {
     const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
-    // Function to send new message or reply to the server
-    function sendMessage(text, parentId = null) {
-        socket.emit('post_message', { text: text, parent_id: parentId });
+    // fire up the websocket connection to the server
+    function sendMessage(text, parentId = null, label, unitCode) {
+        socket.emit('post_message', { text: text, parent_id: parentId, message_label: label, unitCode: unitCode });
     }
 
-    // Listener for new message events emitted from the server
+    // function to emit the posting event to the server
     socket.on('new_message', function(data) {
         const messageList = document.getElementById('messages');
-        const li = document.createElement('li');
-        li.textContent = `${data.user.username}: ${data.text}`; // Assuming `user` object contains `username`
-        li.setAttribute('data-message-id', data.message_id);
-
-        if (data.parent_id) {
-            let parentMessageLi = document.querySelector(`li[data-message-id="${data.parent_id}"]`);
-            if (!parentMessageLi) {
-                console.error(`Parent message with id ${data.parent_id} not found!`);
-                return;
-            }
-            
-            let repliesDiv = parentMessageLi.querySelector('.replies');
-            if (!repliesDiv) {
-                repliesDiv = document.createElement('div');
-                repliesDiv.className = 'replies';
-                parentMessageLi.appendChild(repliesDiv);
-            }
-            
-            let replyContainer = document.createElement('div');
-            replyContainer.className = 'message-container';
-            replyContainer.appendChild(li);
-            repliesDiv.appendChild(replyContainer);
-        } else {
-            messageList.appendChild(li);
-            
-            let repliesDiv = document.createElement('div');
-            repliesDiv.className = 'replies';
-            li.appendChild(repliesDiv);
-            
-            let replyButton = document.createElement('button');
-            replyButton.textContent = 'Reply';
-            replyButton.className = 'reply-btn';
-            replyButton.setAttribute('data-message-id', data.message_id);
-            li.appendChild(replyButton);
+        const messageItem = document.createElement('li');
+        messageItem.setAttribute('data-message-id', data.message_id);
+    
+        // Create and append message label element
+        if (data.label && data.label.trim() !== '') {
+            const labelElement = document.createElement('div');
+            labelElement.textContent = data.label;
+            labelElement.className = 'message-label'; 
+            messageItem.appendChild(labelElement);
         }
+    
+        // Create and append the content of the message body
+        const contentElement = document.createElement('div');
+        contentElement.textContent = `${data.user.username}: ${data.text}`;
+        contentElement.className = 'message-content'; // Style this class in your CSS for proper formatting
+        messageItem.appendChild(contentElement);
+    
+        // add the reply button for optional reply
+        const replyButton = document.createElement('button');
+        replyButton.textContent = 'Reply';
+        replyButton.className = 'reply-btn';
+        replyButton.setAttribute('data-message-id', data.message_id);
+        messageItem.appendChild(replyButton);
+    
+        // Append the constructed list item to the message list
+        messageList.appendChild(messageItem);
     });
 
+    // event listner for click button
     document.getElementById('messages').addEventListener('click', function(event) {
         if (event.target.classList.contains('reply-btn')) {
             const existingReplyForms = document.querySelectorAll('.reply-form');
             existingReplyForms.forEach(form => form.remove());
 
+            // creates new form if the element is a reply
             const replyForm = document.createElement('form');
             replyForm.className = 'reply-form';
             const input = document.createElement('input');
@@ -64,39 +57,43 @@ document.addEventListener('DOMContentLoaded', () => {
             sendButton.type = 'submit';
             sendButton.textContent = 'Send';
 
+            // appends the input to the bottom of the form
             replyForm.appendChild(input);
             replyForm.appendChild(sendButton);
             event.target.after(replyForm);
 
+            // saves parentid to connect to any replys to that element
             const parentId = event.target.getAttribute('data-message-id');
             replyForm.dataset.parentId = parentId;
 
             input.focus();
 
+            // submitting the reply form and clear for next event
             replyForm.onsubmit = function(e) {
                 e.preventDefault();
-                if (input.value.length > 0) {
-                    sendMessage(input.value, parentId);
-                    replyForm.remove(); // Remove the reply form after sending the message
+                if (input.value.trim().length > 0) {
+                    sendMessage(input.value, parentId, '', document.getElementById('unitCode').innerText); // Pass empty string for label in replies
+                    replyForm.remove(); 
                 }
             };
         }
     });
 
-    // Event listener for the message board form submission
+    // listen for submtted messages
     document.getElementById('message-board-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevents the default form submission which reloads the page
-        const messageInput = document.getElementById('message-board-input'); // Gets the message input element
-        const messageText = messageInput.value; // Extracts the text from the input
-        const parentId = document.getElementById('message-board-parent-id').value || null; // Gets the parent ID if any
-
-        // Check if the message is not just empty or spaces
+        event.preventDefault();
+        const messageInput = document.getElementById('message-board-input');
+        const messageText = messageInput.value;
+        const messageLabel = document.getElementById('message-label-input').value;
+        const unitCode = document.getElementById('unitCode').textContent; 
+    
+        // make sure message input isnt empty and makes a new message have null parent id
         if (messageText.trim()) {
-            sendMessage(messageText, parentId); // Sends the message using the existing sendMessage function
-            messageInput.value = ''; // Clears the input after sending
+            sendMessage(messageText, null, messageLabel, unitCode); 
+            messageInput.value = '';
+            document.getElementById('message-label-input').value = '';  
         }
     });
+    
+    
 });
-
-
-// OpenAI. (2024). ChatGPT (4) [Large language model]. https://chat.openai.com

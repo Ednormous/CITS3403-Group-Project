@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String(20), nullable=False)
     email_verified = db.Column(db.Boolean, nullable=False, default=False)
 
-### TODO Link the user detail table to the user table and allow users to finalise their account details within their account detail.
+# TODO Link the user detail table to the user table and allow users to finalise their account details within their account detail.
 
 
 # class user_detail(db.Model):
@@ -25,30 +25,20 @@ class User(db.Model, UserMixin):
 #     firstName = db.Column(db.String(20), nullable=False)
 #     lastName = db.Column(db.String(20), nullable=False)
 
-# Table to store classes
-# class Class(db.Model):
-#     class_id = db.Column(db.Integer, primary_key=True)
-#     class_name = db.Column(db.String(100), nullable=False)
-#     tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 # Table to store enrolments
 # class Enrolment(db.Model):
 #     enrolment_id = db.Column(db.Integer, primary_key=True)
 #     student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 #     class_id = db.Column(db.Integer, db.ForeignKey('class.class_id'), nullable=False)
+# Table to store classes
+
+class Units(db.Model):
+    unit_id = db.Column(db.Integer, primary_key=True)
+    unit_name = db.Column(db.String(100), nullable=False)
+    tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
-# class Message(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-#     content = db.Column(db.Text, nullable=False)
-#     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-
-#     # reference to the User Class
-#     user = db.relationship('User', backref='messages')
-
-#     def __repr__(self):
-#         return f'<Message "{self.content}" by User ID {self.user_id}>'
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -56,6 +46,9 @@ class Message(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     parent_id = db.Column(db.Integer, db.ForeignKey(
         'message.id'), nullable=True)
+    image_url = db.Column(db.Text, nullable=True)
+    label = db.Column(db.Text, nullable=False)
+    unit_id = db.Column(db.Integer, db.ForeignKey('units.unit_id'))
 
     # reference to the User Class
     user = db.relationship('User', backref='messages')
@@ -65,14 +58,6 @@ class Message(db.Model):
     def __repr__(self):
         return f'<Message "{self.content}" by User ID {self.user_id}>'
 
-# # Table to store posts
-# class Communication(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     class_id = db.Column(db.Integer, db.ForeignKey('class.class_id'), nullable=False) # Reference to classes so that forums can be made independent
-#     title = db.Column(db.String(100), nullable=False)
-#     content = db.Column(db.Text(2000), nullable=False) ### Limit the content to 2000 characters
-#     date_posted = db.Column(db.DateTime, nullable=False)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 # Table to store timetables
 # class Timetable(db.Model):
