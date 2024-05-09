@@ -6,12 +6,12 @@
 
 <div id="message-board">
     <h2><span id="unitCode">{{ class_id }}</span> Message Thread</h2>
-    <ul id="messages">
+    <ul id="messages" class="m1">
         <!-- Loop through each message and create a list item -->
         {% for message in messages %}
             {% if message.parent_id == None %}
             
-                <li data-message-id="{{ message.id }}">
+                <li  class="m2" data-message-id="{{ message.id }}">
                     {{ message.user.username }}: {{ message.content }}
                     <button class="reply-btn" data-message-id="{{ message.id }}">Reply</button>
                     <div class="replies">
@@ -44,7 +44,7 @@
         <input type="text" id="message-board-input" placeholder="Enter your message here...">
     </div>
     <input type="hidden" id="message-board-parent-id"> <!-- Hidden field for storing parent ID -->
-    <button type="submit">Submit Post</button>
+    <button class="reply-btn" type="submit">Submit Post</button>
 </form>
 
 {% endblock %}
