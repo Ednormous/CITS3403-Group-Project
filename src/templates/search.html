@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+
+<h1>Searched for</h1>
+<p>{{ searched }}</p>
+<br/>
+
+{% for message in messages %}
+    <a href="{{ url_for('message_board', id=message.id)}}">
+        {{ message.content }}<a/><br/>
+    {% endfor %}
+
+
+{% endblock %}
