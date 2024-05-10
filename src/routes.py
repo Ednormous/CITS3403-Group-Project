@@ -9,6 +9,7 @@ from flask_socketio import emit
 from src import app, db, socketio, mail, s
 from src.models import User, Message
 from datetime import datetime
+from webforms import searchForm
 
 # Homepage
 
@@ -32,7 +33,6 @@ def contact():
     return render_template('contact.html')
 
 # Login page
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -247,6 +247,31 @@ def message_board():
     messages = Message.query.filter_by(unit_id=class_id).all()
 
     return render_template('message_board.html', messages=messages, class_id=class_id)
+
+
+#Pass information to nav-bar
+@app.context_processor
+def base():
+    form = searchForm()
+    return dict(form=form)
+
+#Create search function
+@app.route('/search', methods=['POST'])
+def search():
+   form = searchForm()
+   messages = Message.query 
+   if form.validate_on_submit():
+        #Get data from submitted form
+        Message.searched = form.searched.data
+        #Query the database of messages
+        messages = messages.filter(Message.content.like('%' + Message.searched + '%'))
+        messages = messages.order_by(Message.content).all()
+
+        return render_template('search.html', 
+                               form=form, 
+                               searched=Message.searched,
+                               messages=messages)  
+   
 
 
 @app.route('/profile')
