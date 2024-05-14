@@ -14,14 +14,19 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
+
             <div class="form-group">
                 <button type="submit" class = 'button'>Login</button>
             </div>
+            <label for="remember_me">
+                <input type="checkbox" id="remember_me" name="remember_me">
+                Remember me<br><br>
+            </label>
             <div class="links">
-                <a href="/forgot-password">Forgot Password?</a>
+                <a href="/forgot-password">Forgot Password?</a><br><br>
             </div>
             <div class="links">
-                <a href="{{ url_for('register') }}">Don't Have an Account?</a>
+                <a href="{{ url_for('register') }}">Don't Have an Account?</a><br><br>
             </div>
         </form>
     </section>

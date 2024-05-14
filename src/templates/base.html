@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TuitionTalk{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='/styles.css') }}">
+    <link rel="icon" type="image/png", sizes="32x32" href = ../static/images/CompanyFavicon.png>
 </head>
 
 <body>
@@ -14,8 +15,18 @@
     </div>
     <div class="nav-container">
         <div class="logo">
-            <img src="{{ url_for('static', filename='/images/tempLogo.png') }}" alt="Logo" style="height: 100px;">
+            <img src="{{ url_for('static', filename='/images/TuitionTalkLogo.png') }}" alt="Logo", style="size: 100px;">
         </div>
+        <div class="nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+            <div class="close-icon" style="display:none;">
+                &times;
+            </div>
+        </div>
+
+        <div class="nav-overlay"></div>
         <div class="nav-bar">
             <!-- Button for the links -->
             <a href="{{url_for('home')}}">Home Page</a>
@@ -23,7 +34,7 @@
             <a href="{{url_for('contact')}}">Contact</a>
             <a href="{{url_for('login')}}">Login</a>
             <a href="{{url_for('register')}}">Register</a>
-            <!-- <a href="{{url_for('message_board')}}"> Go to Message Board</a> -->
+
         </div>
     </div>
 
@@ -32,13 +43,31 @@
         {% endblock %}
     </main>
 
-    <footer>
+    <footer class="footer">
         <p>© 2023 Tuition Talk. All rights reserved.</p>
     </footer>
     {% block scripts %}
     <script>
-        
+        document.addEventListener('DOMContentLoaded', function () {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navBar = document.querySelector('.nav-bar');
+            const navOverlay = document.querySelector('.nav-overlay');
+            const closeButton = document.querySelector('.close-icon');
+
+            navToggle.addEventListener('click', function() {
+                navBar.classList.toggle('active');
+                navOverlay.classList.toggle('active');
+                closeButton.classList.toggle('active'); // Toggle visibility of close icon
+            });
+
+            closeButton.addEventListener('click', function() {
+                navBar.classList.remove('active');
+                navOverlay.classList.remove('active');
+                closeButton.classList.remove('active'); // Hide close icon
+            });
+        });
     </script>
+    
     {% endblock %}
 </body>
 </html>
