@@ -593,3 +593,24 @@ img{
         margin: 10px 0; 
     }
 }
+
+
+.m1 {
+    padding: 5px;
+    background-color: white;
+    border-radius: 5px;
+    margin: 10px 0;
+} 
+
+.m2 {
+    list-style-type: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.reply-btn {
+    cursor: pointer;
+}
