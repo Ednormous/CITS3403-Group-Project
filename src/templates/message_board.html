@@ -1,57 +1,79 @@
-{% extends "base.html" %}
-
-{% block title %}Message Board for CITS.... - TuitionTalk{% endblock %}
-
-{% block content %}
-
-<div id="message-board">
-    <h2><span id="unitCode">{{ class_id }}</span> Message Thread</h2>
-    <ul id="messages" class="m1">
-        <!-- Loop through each message and create a list item -->
-        {% for message in messages %}
-            {% if message.parent_id == None %}
-            
-                <li  class="m2" data-message-id="{{ message.id }}">
-                    {{ message.user.username }}: {{ message.content }}
-                    <button class="reply-btn" data-message-id="{{ message.id }}">Reply</button>
-                    <div class="replies">
-                        <ul>
-                        {% for reply in messages %}
-
-                            {% if reply.parent_id == message.id %}
-                                <li>
-                                    {{ reply.user.username }}: {{ reply.content }}
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                        </ul>
-                        
-                    </div>
-                </li>
-            {% endif %}
-
-        {% endfor %}
-    </ul>
-</div>
-
-<form id="message-board-form">
-    <div class="form-group">
-        <label for="message-label-input">Label:</label>
-        <input type="text" id="message-label-input" name="message_label" placeholder="Enter your label here..." required>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Message Board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Variables for user details -->
+    <script>
+        const current_user_id = {{ current_user.id }};
+        const current_user_role = "{{ current_user.role }}";
+        const current_user_username = "{{ current_user.username }}";
+    </script>
+</head>
+<body>
+    <!-- Main container -->
+    <div id="message-board">
+        <h2><span id="unitCode">{{ class_id }}</span> Message Thread</h2>
+        <!-- message thread -->
+        <ul id="messages">
+            <!-- loop through messages on server -->
+            {% for message in messages %}
+                {% if message.parent_id == None %}
+                    <li data-message-id="{{ message.id }}">
+                        <!-- display messages -->
+                        {{ message.user.username }}: {{ message.label, message.content }}
+                        <button class="reply-btn" data-message-id="{{ message.id }}">Reply</button>
+                        <!-- display delete. button if user posted message or user is admin -->
+                        {% if message.user_id == current_user.id or current_user.role == 'admin' %}
+                            <button class="delete-btn" data-message-id="{{ message.id }}">Delete</button>
+                        {% endif %}
+                        <!-- reply container -->
+                        <div class="replies">
+                            <ul>
+                                <!-- loop through replies on server -->
+                                {% for reply in messages %}
+                                    {% if reply.parent_id == message.id %}
+                                        <li data-message-id="{{ reply.id }}">
+                                            <!-- display reply -->
+                                            {{ reply.user.username }}: {{ reply.content }}
+                                            <!-- delete button if user is authorizedd -->
+                                            {% if reply.user_id == current_user.id or current_user.role == 'admin' %}
+                                                <button class="delete-btn" data-message-id="{{ reply.id }}">Delete</button>
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
     </div>
-    <div class="form-group">
-        <label for="message-board-input">Message:</label>
-        <input type="text" id="message-board-input" placeholder="Enter your message here...">
-    </div>
-    <input type="hidden" id="message-board-parent-id"> <!-- Hidden field for storing parent ID -->
-    <button class="reply-btn" type="submit">Submit Post</button>
-</form>
+    <!-- Message form for submitting new message -->
+    <form id="message-board-form">
+        <!-- Input for the message label -->
+        <div class="form-group">
+            <label for="message-label-input">Label:</label>
+            <input type="text" id="message-label-input" name="message_label" placeholder="Enter your label here..." required>
+        </div>
+        <!-- input for the message body -->
+        <div class="form-group">
+            <label for="message-board-input">Message:</label>
+            <input type="text" id="message-board-input" placeholder="Enter your message here...">
+        </div>
+        <input type="hidden" id="message-board-parent-id">
+        <button type="submit">Submit Post</button>
+    </form>
 
-{% endblock %}
-
-{% block scripts %}
-<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
-<script src="{{ url_for('static', filename='js/message_board.js') }}" defer></script>
-{% endblock %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/message_board.js') }}" defer></script>
+</body>
+</html>
 
 
+<!-- This project includes code generated with the assistance of OpenAI's ChatGPT.
+
+**Citation:**
+ChatGPT, OpenAI. “Flask WebSocket Message Board Code Assistance.” ChatGPT, OpenAI, 2024. -->

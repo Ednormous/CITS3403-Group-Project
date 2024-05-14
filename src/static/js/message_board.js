@@ -1,99 +1,145 @@
-// // this Js doc is the server-side for the message board/
+// // // this Js doc is the server-side for the message board/
 
-// listens for the document to fully load
+// Waits for the entire documnet to load before going on to execute the script
 document.addEventListener('DOMContentLoaded', () => {
+    // Establishes websocket connection
     const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+    
+    // references to form fields and page elements
+    const messageForm = document.getElementById('message-board-form');
+    const messageInput = document.getElementById('message-board-input');
+    const messageLabelInput = document.getElementById('message-label-input');
+    const parentIdInput = document.getElementById('message-board-parent-id');
+    const unitCode = document.getElementById('unitCode').textContent;
 
-    // fire up the websocket connection to the server
+    // New message function
     function sendMessage(text, parentId = null, label, unitCode) {
         socket.emit('post_message', { text: text, parent_id: parentId, message_label: label, unitCode: unitCode });
     }
+    // Delete message function
+    function deleteMessage(messageId) {
+        socket.emit('delete_message', { message_id: messageId });
+    }
+    // Submit event handler for the message
+    messageForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        // get values and trim white space
+        const text = messageInput.value.trim();
+        const label = messageLabelInput.value.trim();
+        const parentId = parentIdInput.value;
+        // check is input is empty
+        if (text !== '') {
+            // send message and clear variables
+            sendMessage(text, parentId || null, label, unitCode);
+            messageInput.value = '';
+            messageLabelInput.value = '';
+            parentIdInput.value = '';
+        }
+    });
 
-    // function to emit the posting event to the server
-    socket.on('new_message', function(data) {
+    // Event handler for reply and delete
+    document.getElementById('messages').addEventListener('click', (event) => {
+        // If reply 
+        if (event.target.classList.contains('reply-btn')) {
+            const parentId = event.target.getAttribute('data-message-id');
+            const replyForm = document.createElement('form');
+            replyForm.className = 'reply-form';
+            const replyInput = document.createElement('input');
+            replyInput.type = 'text';
+            replyInput.className = 'reply-input';
+            replyInput.placeholder = 'Enter your reply here...';
+            const sendButton = document.createElement('button');
+            sendButton.type = 'submit';
+            sendButton.textContent = 'Send';
+
+            replyForm.appendChild(replyInput);
+            replyForm.appendChild(sendButton);
+            event.target.after(replyForm);
+
+            replyInput.focus();
+
+            replyForm.onsubmit = (e) => {
+                e.preventDefault();
+                const replyText = replyInput.value.trim();
+                if (replyText !== '') {
+                    sendMessage(replyText, parentId, '', unitCode);
+                    replyForm.remove();
+                }
+            };
+        }
+
+        // if Delete clicked then delete
+        if (event.target.classList.contains('delete-btn')) {
+            const messageId = event.target.getAttribute('data-message-id');
+            deleteMessage(messageId);
+        }
+    });
+    // event handler for recieving new message
+    socket.on('new_message', (data) => {
         const messageList = document.getElementById('messages');
         const messageItem = document.createElement('li');
         messageItem.setAttribute('data-message-id', data.message_id);
-    
-        // Create and append message label element
+
+        // if label then add to message
         if (data.label && data.label.trim() !== '') {
             const labelElement = document.createElement('div');
             labelElement.textContent = data.label;
-            labelElement.className = 'message-label'; 
+            labelElement.className = 'message-label';
             messageItem.appendChild(labelElement);
         }
-    
-        // Create and append the content of the message body
+
+        // add content and username
         const contentElement = document.createElement('div');
-        contentElement.textContent = `${data.user.username}: ${data.text}`;
-        contentElement.className = 'message-content'; // Style this class in your CSS for proper formatting
+        contentElement.textContent = `${data.username}: ${data.text}`;
+        contentElement.className = 'message-content';
         messageItem.appendChild(contentElement);
-    
-        // add the reply button for optional reply
+
+        // add reply button
         const replyButton = document.createElement('button');
         replyButton.textContent = 'Reply';
         replyButton.className = 'reply-btn';
         replyButton.setAttribute('data-message-id', data.message_id);
         messageItem.appendChild(replyButton);
-    
-        // Append the constructed list item to the message list
-        messageList.appendChild(messageItem);
-    });
 
-    // event listner for click button
-    document.getElementById('messages').addEventListener('click', function(event) {
-        if (event.target.classList.contains('reply-btn')) {
-            const existingReplyForms = document.querySelectorAll('.reply-form');
-            existingReplyForms.forEach(form => form.remove());
+        // add delete button only if username matches current user or site admin
+        if (data.user_id == current_user_id || current_user_role === 'admin') {
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'delete-btn';
+            deleteButton.setAttribute('data-message-id', data.message_id);
+            messageItem.appendChild(deleteButton);
+        }
+        //  empty list for replies
+        const repliesList = document.createElement('ul');
+        repliesList.className = 'replies';
+        messageItem.appendChild(repliesList);
 
-            // creates new form if the element is a reply
-            const replyForm = document.createElement('form');
-            replyForm.className = 'reply-form';
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.className = 'reply-input';
-            input.placeholder = 'Enter your reply here...';
-            const sendButton = document.createElement('button');
-            sendButton.type = 'submit';
-            sendButton.textContent = 'Send';
-
-            // appends the input to the bottom of the form
-            replyForm.appendChild(input);
-            replyForm.appendChild(sendButton);
-            event.target.after(replyForm);
-
-            // saves parentid to connect to any replys to that element
-            const parentId = event.target.getAttribute('data-message-id');
-            replyForm.dataset.parentId = parentId;
-
-            input.focus();
-
-            // submitting the reply form and clear for next event
-            replyForm.onsubmit = function(e) {
-                e.preventDefault();
-                if (input.value.trim().length > 0) {
-                    sendMessage(input.value, parentId, '', document.getElementById('unitCode').innerText); // Pass empty string for label in replies
-                    replyForm.remove(); 
-                }
-            };
+        // Append to message as reply to parent message if it exists else to main
+        if (data.parent_id) {
+            const parentMessage = document.querySelector(`[data-message-id='${data.parent_id}'] .replies`);
+            if (parentMessage) {
+                parentMessage.appendChild(messageItem);
+            }
+        } else {
+            messageList.appendChild(messageItem);
         }
     });
-
-    // listen for submtted messages
-    document.getElementById('message-board-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const messageInput = document.getElementById('message-board-input');
-        const messageText = messageInput.value;
-        const messageLabel = document.getElementById('message-label-input').value;
-        const unitCode = document.getElementById('unitCode').textContent; 
-    
-        // make sure message input isnt empty and makes a new message have null parent id
-        if (messageText.trim()) {
-            sendMessage(messageText, null, messageLabel, unitCode); 
-            messageInput.value = '';
-            document.getElementById('message-label-input').value = '';  
+    //  Delete event
+    socket.on('message_deleted', (data) => {
+        // locate message by message id and remove it from the dom
+        const messageItem = document.querySelector(`[data-message-id='${data.message_id}']`);
+        if (messageItem) {
+            messageItem.remove();
         }
     });
-    
-    
+    //  Display error messages in alert box
+    socket.on('error', (data) => {
+        alert(data.error);
+    });
 });
+
+// This project includes code generated with the assistance of OpenAI's ChatGPT.
+// Consulted ChatGPT for help with implementing the edit and delete features, WebSocket event handling, and ensuring that users can only edit or delete their own messages, except for administrators who can delete any message.
+
+// **Citation:**
+// ChatGPT, OpenAI. “Flask WebSocket Message Board Code Assistance.” ChatGPT, OpenAI, 2024.

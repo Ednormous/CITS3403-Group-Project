@@ -1,5 +1,9 @@
 # Specifies the routes for the application
 
+from src.models import Message
+from src import app, db, socketio
+from flask_login import current_user, login_required
+from flask import request, jsonify, abort
 from flask import request, render_template, flash, redirect, url_for, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -232,21 +236,27 @@ def create_user():
 
 # @app.route('/message_board')
 # def message_board():
-#     # Query messages from the database
-#     messages = Message.query.all()
+#     class_id = request.args.get('class_id')
+#     if not class_id:
+#         return "Class ID is required", 400  # Return an error or redirect as needed
 
-#     return render_template('message_board.html', messages=messages, class_id=request.args.get('class_id'))
+#     # Assuming 'unit_id' in 'Message' corresponds to 'class_id'
+#     messages = Message.query.filter_by(unit_id=class_id).all()
+
+#     return render_template('message_board.html', messages=messages, class_id=class_id)
+
+# from flask_login import current_user, login_required
 
 @app.route('/message_board')
+@login_required
 def message_board():
     class_id = request.args.get('class_id')
     if not class_id:
-        return "Class ID is required", 400  # Return an error or redirect as needed
+        return "Class ID is required", 400
 
-    # Assuming 'unit_id' in 'Message' corresponds to 'class_id'
     messages = Message.query.filter_by(unit_id=class_id).all()
 
-    return render_template('message_board.html', messages=messages, class_id=class_id)
+    return render_template('message_board.html', messages=messages, class_id=class_id, current_user=current_user)
 
 
 #Pass information to nav-bar
@@ -297,12 +307,11 @@ def settings():
 def forums():
     return render_template('forums.html')
 
-# websocket for the message board
+# Event handler for posting a message, broadcasts message details to connected clients
 
 
 @socketio.on('post_message')
 def handle_message(data):
-    print('anything')
     if not current_user.is_authenticated:
         emit('error', {'error': 'User not authenticated'})
         return False
@@ -312,9 +321,9 @@ def handle_message(data):
     parent_id = data.get('parent_id')
     message_label = data['message_label']
     unitCode = data['unitCode']
-    print(message_label)
 
     try:
+        # Create a new message and add to DB
         new_message = Message(user_id=user_id, content=text,
                               timestamp=datetime.utcnow(),
                               parent_id=parent_id,
@@ -323,24 +332,39 @@ def handle_message(data):
                               unit_id=unitCode)
         db.session.add(new_message)
         db.session.commit()
+        # emit new message event
         emit('new_message', {
+            'message_id': new_message.id,
             'text': text,
-            'label': label,  # Make sure label is being sent
+            'label': message_label,
             'parent_id': parent_id,
             'user_id': user_id,
-            'username': current_user.username,  # Ensure username is also sent
-            'message_id': new_message.id
+            'username': current_user.username
         }, broadcast=True)
     except Exception as e:
+        # roll back if error
         db.session.rollback()
-        print(f"Error saving message: {e}")
         emit('error', {'error': str(e)})
 
 
-# @app.route('/units')
-# def unit_view():
-#     from src.models import Units  # Import your Units model
-#     all_units = Units.query.all()  # Fetch all units from the database
-#     return render_template('base_user.html', all_units=all_units)
-#  use the unit code i have and look at the uinit code in the database to get the unit id,
-        # then parse unit id into insert
+# handler for Delete message event, using message id by broadcasting to clients and deleting if parameters met
+@socketio.on('delete_message')
+def handle_delete_message(data):
+    message_id = data.get('message_id')
+    message = Message.query.get(message_id)
+
+    if not message:
+        emit('error', {'error': 'Message not found'})
+        return
+    # only user and admin can delete message
+    if message.user_id != current_user.id and current_user.role != 'admin':
+        emit('error', {'error': 'Unauthorized'})
+        return
+
+    try:
+        db.session.delete(message)
+        db.session.commit()
+        emit('message_deleted', {'message_id': message_id}, broadcast=True)
+    except Exception as e:
+        db.session.rollback()
+        emit('error', {'error': str(e)})
