@@ -22,7 +22,6 @@
             }
 
             #message-board {
-                max-width: 800px;
                 margin: 0 auto;
                 background-color: #fff;
                 padding: 20px;
@@ -50,7 +49,8 @@
             }
 
             .reply-btn,
-            .delete-btn {
+            .delete-btn,
+            .btn-success {
                 padding: 5px 10px;
                 background-color: #4CAF50;
                 color: #fff;
@@ -154,6 +154,13 @@
             #message-board {
                 margin-top: 60px; 
             }
+
+            .container {
+                text-align: center;
+                margin-top: 0;
+                color: #333;
+                padding-bottom: 15px;
+            }
         </style>
     </head>
 
@@ -179,6 +186,17 @@
         <!-- Main container -->
         <div id="message-board">
             <h2><span id="unitCode">{{ class_id }}</span> Message Thread</h2>
+            <br/>
+
+            <div class="container">
+                <form method="POST" action="{{ url_for('search')}}" class="d-flex">
+                    {{ form.hidden_tag() }}
+                    <input class="form-control me-2" type="search" placeholder="Search" 
+                    aria-label="Search" name="searched">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
+
             <!-- message thread -->
             <ul id="messages">
                 <!-- loop through messages on server -->

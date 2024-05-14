@@ -274,8 +274,8 @@ def search():
         #Get data from submitted form
         Message.searched = form.searched.data
         #Query the database of messages
-        messages = messages.filter(Message.content.like('%' + Message.searched + '%'))
-        messages = messages.order_by(Message.content).all()
+        messages = messages.filter(Message.label.like('%' + Message.searched + '%'))
+        messages = messages.order_by(Message.timestamp).all()
 
         return render_template('search.html', 
                                form=form, 
