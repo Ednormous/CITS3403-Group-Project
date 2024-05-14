@@ -1,60 +1,68 @@
 /* Styling for public base.html */
 
 html, body { font-family: Arial, sans-serif; 
-    height: 100vh;
-    display:flex;
     flex-direction: column;
     margin: 0; 
     padding: 0; }
 
-main { flex-grow: 1;
+main {
     display: flex;
-    flex-grow: 1;
     flex-direction: column;
-    padding: 0 20px;
+    padding: 120px, 20px, 0;
     container:center; 
 }
 
+/* Header */
 .top-header {
     background-color: rgb(84, 161, 93); 
     height: 80px;
-    padding: 10px 20px;
+    padding: 10px;
     color: white;
     text-align: center;
+    width: 100%;
 }
+/* Yellow nav below the header */
 .nav-container {
-    display: flex; /* Use flexbox for positioning */
-    justify-content: center; /* Center the items in the container */
-    position: relative; /* Needed for z-index to work */
-    z-index: 2; /* Higher than top-header to overlap */
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    position: relative; 
+    z-index: 2; 
+    padding: 0 20px;
+    margin-top: -40px;
+    margin-right: 40px;
 }
 .logo {
-    flex: 0 0 auto; /* Do not grow or shrink */
+    width:120px;
+    height: auto;
     margin-top: -30px;
-    margin-right: -200px; /* Adjust the distance from the yellow bar */
-    align-self: center; /* Align vertically in the middle */
+    margin-right: 0px; 
+    box-shadow: #2c2b2b;
+    border-radius: 80px;
+    border: 5px solid rgb(255, 157, 0);
 }
 .nav-bar {
-    background-color: rgb(255, 157, 0); 
-    margin-left: 20%; 
-    width: 60%; 
-    margin-top: -40px; 
-    padding: 30px 10px;
-    box-shadow: 0 2px 5px rgba(142, 133, 133, 0.2); 
-    text-align: center; 
-    border-radius: 8px; 
+    background-color: rgb(255, 157, 0);
+    margin-top: -20px;
+    padding: 20px 10px;
+    box-shadow: 0 2px 5px rgba(142, 133, 133, 0.2);
+    text-align: center;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
 }
 .nav-bar a {
     color: black;
     text-decoration: none;
-    margin: 0 10px; /* Space between buttons */
+    margin: 0 15px; /* Space between buttons */
     padding: 10px 15px; /* Padding inside the buttons */
-    border:2px solid rgb(181, 120, 22); /* Yellow border */
+    border:2px solid rgb(115, 72, 3); /* Yellow border */
     border-radius: 4px; /* Rounded corners for the buttons */
     background-color: #ffffff; /* Initial button color */
     transition: background-color 0.3s; /* Smooth transition for hover effect */
     display: inline-block; /* Treat the links as blocks for padding and margins */
     box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+    flex-grow: 0;
 }
 
 .nav-bar a:hover {
@@ -63,7 +71,7 @@ main { flex-grow: 1;
     color: white; /* White text on hover */
 }
 
-footer { background: rgb(45, 103, 50);  
+.footer { background: rgb(45, 103, 50);  
     color: white; 
     padding: 10px 20px; 
     text-align: center; 
@@ -149,6 +157,444 @@ footer { background: rgb(45, 103, 50);
     color: rgb(64, 122, 70); 
 }
 
+/* 
+ */
+ /* Styling for the home page */
+
+
+h1, p {
+    text-align: center; 
+    margin-top: 2rem; 
+}
+
+/* Featured Courses Section */
+#courses {
+    width: 100%;
+    padding: 20px;
+    background: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.course {
+    width: 250px;
+    margin: 10px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: #2c2b2b;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 15px;
+}
+
+.course:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.511);
+    background-color: rgba(48, 181, 24, 0.645);
+}
+
+.course img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.course-content {
+    padding: 15px;
+}
+
+.course h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.course p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* Utility classes for text alignment */
+.text-center {
+    text-align: center;
+}
+
+.course-container {
+    display: flex;  
+    overflow-x: auto; 
+    scrollbar-width: thin; 
+    scrollbar-color: #888 #f9f9f9; 
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center;
+}
+
+.course-container::-webkit-scrollbar {
+    height: 10px; 
+}
+
+.course-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.course:last-child {
+    margin-right: 0; 
+}
+
+.course h3, .course p {
+    text-align: left; 
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px; 
+}
+
+img{
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover; 
+    border-radius: 2px;
+}
+
+.top-image {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.top-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); 
+    background-color: rgba(67, 105, 81, 0.739); 
+    padding: 20px; 
+}
+
+.image-text h2 {
+    font-size: 3rem; 
+    margin-bottom: 1rem;
+}
+
+.image-text p {
+    font-size: 1.8rem; 
+}
+
+/* CSS if conditions are met */
+/* For smaller screens */
+
+.nav-bar.active, .nav-overlay.active {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.9);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.close-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    display: block; /* Only show when active */
+}
+
+.nav-toggle {
+    display: none;  /* Hide by default on larger screens */
+    cursor: pointer;
+    position: relative;
+    z-index: 1001;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: rgb(77, 116, 59); 
+    margin-bottom: 5px;
+}
+
+.nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+@media screen and (min-width: 769px) {
+    .nav-toggle .close-icon {
+        display: none; /* Hide close icon on larger screens */
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .nav-toggle {
+        display: block; 
+    }
+
+    .nav-bar {
+        position: fixed;
+        top: 0;
+        left: 100%; /* Initially off-screen to the right */
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        background-color: rgba(115, 195, 127, 0.474);
+        align-items: center;
+        justify-content: center;
+        transition: left 0.3s ease; /* Smooth transition for sliding in */
+    }
+
+    .nav-bar.active {
+        left: 0; /* Slide in from the right */
+    }
+
+    .nav-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .nav-overlay.active {
+        opacity: 1; /* Make overlay visible */
+    }
+
+    .close-icon {
+        display: none; 
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .close-icon.active {
+        display: block; 
+    }
+
+    .image-text {
+        padding: 10px;
+    }
+
+    .image-text h2 {
+        font-size: 1.5rem;
+    }
+
+    .image-text p {
+        font-size: 1rem;
+    }
+
+    .course-container {
+        flex-direction: column;
+    }
+
+    .course {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .nav-overlay.active{
+        display:block;
+    }
+
+    .footer { 
+        background: rgb(45, 103, 50);  
+        color: white; 
+        padding: 10px 20px; 
+        text-align: center; 
+        margin-top: auto;
+    }
+}
+
+
+/* About Page */
+.mission,
+.team,
+.history,
+.partnerships,
+.press {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.mission h1,
+.team h2,
+.history h2,
+.partnerships h2,
+.press h2{
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.mission p,
+.history p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.testimonials,
+.social-proof {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.testimonials h2,
+.social-proof h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+/* Benefits Section */
+
+.benefits {
+    background-color: #f4f4f9; 
+    padding: 40px 20px; 
+    text-align: center; 
+    margin: 20px 0; 
+}
+
+.benefits h2 {
+    color: #333; 
+    font-size: 2rem; 
+    margin-bottom: 20px; 
+}
+
+.benefits ul {
+    list-style: none; 
+    padding: 0; 
+}
+
+.benefits li {
+    font-size: 1.2rem; 
+    color: #666; 
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd; 
+    margin-bottom: 10px; 
+}
+
+.benefits li:last-child {
+    border-bottom: none; 
+}
+
+.benefits li:before {
+    content: "✔";
+    color: #84c784; 
+    margin-right: 10px; 
+    font-size: 1.5rem; 
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .benefits {
+        padding: 20px 10px; 
+    }
+
+    .benefits h2 {
+        font-size: 1.5rem; 
+    }
+
+    .benefits li {
+        font-size: 1rem; 
+    }
+}
+
+/* Testimonials section*/
+.testimonials {
+    background-color: #ffffff; 
+    padding: 40px 20px; 
+    text-align: center; 
+    margin: 40px 0; 
+}
+
+.testimonials h2 {
+    color: #333; 
+    font-size: 2.2rem;
+    margin-bottom: 30px; 
+}
+
+.testimonial-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+}
+
+.testimonial-card {
+    width: 90%; 
+    max-width: 700px; 
+    background: #f9f9f9; 
+    margin: 0 10px; 
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 10px; 
+    transition: transform 0.3s ease-in-out; 
+}
+
+.testimonial-card:hover {
+    transform: scale(1.05); 
+}
+
+.testimonial-card p {
+    font-size: 1.1rem; 
+    line-height: 1.6; 
+    color: #555; 
+}
+
+.student-name {
+    font-weight: bold; 
+    margin-top: 15px; 
+    color: #84c784; 
+}
+
+@media (max-width: 768px) {
+    .testimonial-slider {
+        flex-direction: column; 
+    }
+
+    .testimonial-card {
+        margin: 10px 0; 
+    }
+}
+
+
 .m1 {
     padding: 5px;
     background-color: white;
@@ -168,4 +614,3 @@ footer { background: rgb(45, 103, 50);
 .reply-btn {
     cursor: pointer;
 }
-

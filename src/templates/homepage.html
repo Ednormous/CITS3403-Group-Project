@@ -3,8 +3,79 @@
 {% block title %}Home - Tutition Talk{% endblock %}
 
 {% block content %}
-    <section>
-        <h1>Welcome to Our Learning Community!</h1>
-        <p>Join us to expand your knowledge with the best courses and resources.</p>
+    <div class="top-image">
+        <img src="{{ url_for('static', filename='/images/ImageGeneratedByChatGPT(Classroom).png') }}" alt="CollaborativeClassroom", style="size: 100px;" >
+        <div class="image-text">
+            <h2>Welcome to Our Learning Community!</h1>
+            <p>Join us to expand your knowledge with the best courses and resources.</p>
+            <a href="{{url_for('register')}}" class="button">Get Started</a>
+        </div>
+    </div>
+    <h1>Featured Courses</h1>
+    <section id="courses">
+        
+        <div class="course-container">
+
+            <div class="course">
+                <h3>Introduction to Python</h3>
+                <p>Learn the fundamentals of Python programming language and start building your own applications</p>
+                <p>CITS1401</p>
+            </div>
+
+            <div class="course">
+                <h3>Data Science Essentials</h3>
+                <p>Explore the world of data science and learn how to analyse and visualise data using popular tools and techniques.</p>
+                <p>CITS2401</p>
+            </div>
+            
+            <div class="course">
+                <h3>Web Development</h3>
+                <p>Master the skills of front-end and back-end web development and build dynamic and responsive websites.</p>
+                <p>CITS3401</p>
+            </div>
+            
+            <div class="course">
+                <h3>Pre-Calculus</h3>
+                <p>Get a head start on your calculus journey by mastering the essential concepts of pre-calculus.</p>
+                <p>MATH1001</p>
+            </div>
+
+            <div class="course">
+                <h3>Histroical Literature</h3>
+                <p>Explore the rich tapestry of historical literature and gain insights into the past.</p>
+                <p>ENGL1001</p>
+            </div>
+        </div>
     </section>
+    
+    <section class="testimonials">
+        <h2>What Our Students Say</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial-card">
+                <p>"TuitionTalk has been a game-changer for me. The courses are well-structured and the instructors are knowledgeable. I highly recommend it!"</p>
+                <p class="student-name">- Alexis Brown</p>
+            </div>
+            <div class="testimonial-card">
+                <p>"I never thought I could learn so much online until I found TuitionTalk. The interactive lessons and practical projects have helped me gain valuable skills."</p>
+                <p class="student-name">- Jim Cook</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <h2>Why Choose TuitionTalk</h2>
+        <ul>
+            <li>Personalized learning experience</li>
+            <li>Expert instructors</li>
+            <li>Interactive content</li>
+            <li>Flexible learning options</li>
+        </ul>
+    </section>
+
+    <section class="social-proof">
+        <h2>Join Our Growing Community by signing up</h2>
+        
+
+
+    
 {% endblock %}
