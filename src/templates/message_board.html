@@ -1,79 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Message Board</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <!-- Variables for user details -->
-    <script>
-        const current_user_id = {{ current_user.id }};
-        const current_user_role = "{{ current_user.role }}";
-        const current_user_username = "{{ current_user.username }}";
-    </script>
-</head>
-<body>
-    <!-- Main container -->
-    <div id="message-board">
-        <h2><span id="unitCode">{{ class_id }}</span> Message Thread</h2>
-        <!-- message thread -->
-        <ul id="messages">
-            <!-- loop through messages on server -->
-            {% for message in messages %}
-                {% if message.parent_id == None %}
-                    <li data-message-id="{{ message.id }}">
-                        <!-- display messages -->
-                        {{ message.user.username }}: {{ message.label, message.content }}
-                        <button class="reply-btn" data-message-id="{{ message.id }}">Reply</button>
-                        <!-- display delete. button if user posted message or user is admin -->
-                        {% if message.user_id == current_user.id or current_user.role == 'admin' %}
-                            <button class="delete-btn" data-message-id="{{ message.id }}">Delete</button>
-                        {% endif %}
-                        <!-- reply container -->
-                        <div class="replies">
-                            <ul>
-                                <!-- loop through replies on server -->
-                                {% for reply in messages %}
-                                    {% if reply.parent_id == message.id %}
-                                        <li data-message-id="{{ reply.id }}">
-                                            <!-- display reply -->
-                                            {{ reply.user.username }}: {{ reply.content }}
-                                            <!-- delete button if user is authorizedd -->
-                                            {% if reply.user_id == current_user.id or current_user.role == 'admin' %}
-                                                <button class="delete-btn" data-message-id="{{ reply.id }}">Delete</button>
-                                            {% endif %}
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
-    <!-- Message form for submitting new message -->
-    <form id="message-board-form">
-        <!-- Input for the message label -->
-        <div class="form-group">
-            <label for="message-label-input">Label:</label>
-            <input type="text" id="message-label-input" name="message_label" placeholder="Enter your label here..." required>
-        </div>
-        <!-- input for the message body -->
-        <div class="form-group">
-            <label for="message-board-input">Message:</label>
-            <input type="text" id="message-board-input" placeholder="Enter your message here...">
-        </div>
-        <input type="hidden" id="message-board-parent-id">
-        <button type="submit">Submit Post</button>
-    </form>
+    <head>
+        <meta charset="UTF-8">
+        <title>Message Board</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
-    <script src="{{ url_for('static', filename='js/message_board.js') }}" defer></script>
-</body>
+        <!-- Variables for user details -->
+        <script>
+            const current_user_id = "{{ current_user.id }}";
+            const current_user_role = "{{ current_user.role }}";
+            const current_user_username = "{{ current_user.username }}";
+        </script>
+
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            }
+
+            #message-board {
+                max-width: 800px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            h2 {
+                text-align: center;
+                margin-top: 0;
+                color: #333;
+            }
+
+            #messages {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            #messages li {
+                margin-bottom: 20px;
+                padding: 10px;
+                background-color: #f9f9f9;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .reply-btn,
+            .delete-btn {
+                padding: 5px 10px;
+                background-color: #4CAF50;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+                margin-left: 10px;
+            }
+
+            .delete-btn {
+                background-color: #f44336;
+            }
+
+            .replies {
+                margin-top: 10px;
+                padding-left: 20px;
+            }
+
+            .replies ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .replies li {
+                margin-bottom: 10px;
+                padding: 5px;
+                background-color: #f1f1f1;
+                border-radius: 3px;
+            }
+
+            #message-board-form {
+                margin-top: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            input[type="text"] {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                box-sizing: border-box;
+            }
+
+            button[type="submit"] {
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: #333;
+                color: #fff;
+                padding: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 999;
+            }
+
+            .nav-left {
+                flex: 1;
+                text-align: left;
+            }
+
+            .nav-center {
+                flex: 2;
+                text-align: center;
+                font-weight: bold;
+                font-size: 18px;
+            }
+
+            .nav-right {
+                flex: 1;
+                text-align: right;
+                padding-right: 10px;
+            }
+
+            .nav-button {
+                color: #fff;
+                text-decoration: none;
+                padding: 5px 10px;
+                border: 1px solid #fff;
+                border-radius: 3px;
+            }
+
+            #message-board {
+                margin-top: 60px; 
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- TODO -->
+        <!-- Navigation bar not working -->
+        <!-- The hierarchy of the DOM is not working with the js -->
+        <!-- TODO -->
+
+
+        <!-- <nav>
+            <div class="nav-left">
+                <a href="#" class="nav-button">Dashboard</a>
+            </div>
+            <div class="nav-center">
+                <span id="unitCode">{{ class_id }} Dashboard</span>
+            </div>
+            <div class="nav-right">
+                <span>Welcome {{ current_user.username }}</span>
+            </div>
+        </nav> -->
+
+        <!-- Main container -->
+        <div id="message-board">
+            <h2><span id="unitCode">{{ class_id }}</span> Message Thread</h2>
+            <!-- message thread -->
+            <ul id="messages">
+                <!-- loop through messages on server -->
+                {% for message in messages %}
+                    {% if message.parent_id == None %}
+                        <li data-message-id="{{ message.id }}">
+                            <!-- display messages -->
+                            {{ message.user.username }}: {{ message.label, message.content }}
+                            <button class="reply-btn" data-message-id="{{ message.id }}">Reply</button>
+                            <!-- display delete. button if user posted message or user is admin -->
+                            {% if message.user_id == current_user.id or current_user.role == 'admin' %}
+                                <button class="delete-btn" data-message-id="{{ message.id }}">Delete</button>
+                            {% endif %}
+                            <!-- reply container -->
+                            <div class="replies">
+                                <ul>
+                                    <!-- loop through replies on server -->
+                                    {% for reply in messages %}
+                                        {% if reply.parent_id == message.id %}
+                                            <li data-message-id="{{ reply.id }}">
+                                                <!-- display reply -->
+                                                {{ reply.user.username }}: {{ reply.content }}
+                                                <!-- delete button if user is authorizedd -->
+                                                {% if reply.user_id == current_user.id or current_user.role == 'admin' %}
+                                                    <button class="delete-btn" data-message-id="{{ reply.id }}">Delete</button>
+                                                {% endif %}
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- Message form for submitting new message -->
+        <form id="message-board-form">
+            <!-- Input for the message label -->
+            <div class="form-group">
+                <label for="message-label-input">Label:</label>
+                <input type="text" id="message-label-input" name="message_label" placeholder="Enter your label here..." required>
+            </div>
+            <!-- input for the message body -->
+            <div class="form-group">
+                <label for="message-board-input">Message:</label>
+                <input type="text" id="message-board-input" placeholder="Enter your message here...">
+            </div>
+            <input type="hidden" id="message-board-parent-id">
+            <button type="submit">Submit Post</button>
+        </form>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+        <script src="{{ url_for('static', filename='js/message_board.js') }}" defer></script>
+    </body>
 </html>
-
-
-<!-- This project includes code generated with the assistance of OpenAI's ChatGPT.
-
-**Citation:**
-ChatGPT, OpenAI. “Flask WebSocket Message Board Code Assistance.” ChatGPT, OpenAI, 2024. -->
+    
+    
+    <!-- This project includes code generated with the assistance of OpenAI's ChatGPT.
+    
+    **Citation:**
+    ChatGPT, OpenAI. “Flask WebSocket Message Board Code Assistance.” ChatGPT, OpenAI, 2024. -->
