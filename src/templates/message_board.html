@@ -161,6 +161,16 @@
                 color: #333;
                 padding-bottom: 15px;
             }
+
+            .message-header {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+            }
+
+            .message-user, .message-label {
+                margin-right: 10px;
+            }
         </style>
     </head>
 
@@ -202,17 +212,21 @@
                 <!-- loop through messages on server -->
                 {% for message in messages %}
                     {% if message.parent_id == None %}
-                        <li data-message-id="{{ message.id }}">
-                            <!-- display messages -->
-                            {{ message.user.username }}: {{ message.label, message.content }}
-                            <button class="reply-btn" data-message-id="{{ message.id }}">Reply</button>
-                            <!-- display delete. button if user posted message or user is admin -->
-                            {% if message.user_id == current_user.id or current_user.role == 'admin' %}
-                                <button class="delete-btn" data-message-id="{{ message.id }}">Delete</button>
-                            {% endif %}
+                        <li data-message-id="{{ message.id }}" class="message-item">
+                            <div class="message-header">
+                                <span class="message-user">{{ message.user.username }}</span>
+                                <span class="message-label">{{ message.label }}</span>
+                            </div>
+                            <div class="message-body">
+                                <p>{{ message.content }}</p>
+                                <button class="reply-btn" data-message-id="{{ message.id }}">Reply</button>
+                                {% if message.user_id == current_user.id or current_user.role == 'admin' %}
+                                    <button class="delete-btn" data-message-id="{{ message.id }}">Delete</button>
+                                {% endif %}
+                            </div>
                             <!-- reply container -->
-                            <div class="replies">
-                                <ul>
+                            <div>
+                                <ul class="replies">
                                     <!-- loop through replies on server -->
                                     {% for reply in messages %}
                                         {% if reply.parent_id == message.id %}
@@ -254,7 +268,8 @@
     </body>
 </html>
     
-    
+
+    <!-- This project includes code generated with the assistance of git-hub copilot -->
     <!-- This project includes code generated with the assistance of OpenAI's ChatGPT.
     
     **Citation:**
