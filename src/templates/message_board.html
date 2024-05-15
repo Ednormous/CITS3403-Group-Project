@@ -1,10 +1,15 @@
-<!DOCTYPE html>
+{% extends "base_user.html" %}
+
+{% block content %}
+
+<!--<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Message Board</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+
 
         <!-- Variables for user details -->
         <script>
@@ -14,12 +19,7 @@
         </script>
 
         <style>
-            body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-            }
+
 
             #message-board {
                 margin: 0 auto;
@@ -37,6 +37,7 @@
 
             #messages {
                 list-style-type: none;
+                text-align: left;
                 padding: 0;
             }
 
@@ -152,13 +153,15 @@
             }
 
             #message-board {
-                margin-top: 60px; 
+                margin-top: 0px; 
             }
 
-            .container {
+            .container-search {
                 text-align: center;
                 margin-top: 0;
                 color: #333;
+                border-color: #333;
+                border-radius: 10px;
                 padding-bottom: 15px;
             }
 
@@ -198,7 +201,7 @@
             <h2><span id="unitCode">{{ class_id }}</span> Message Thread</h2>
             <br/>
 
-            <div class="container">
+            <div class="container-search" id="searchbar">
                 <form method="POST" action="{{ url_for('search')}}" class="d-flex">
                     {{ form.hidden_tag() }}
                     <input class="form-control me-2" type="search" placeholder="Search" 
@@ -274,3 +277,5 @@
     
     **Citation:**
     ChatGPT, OpenAI. “Flask WebSocket Message Board Code Assistance.” ChatGPT, OpenAI, 2024. -->
+
+{% endblock %}
