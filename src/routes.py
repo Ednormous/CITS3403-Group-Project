@@ -1,5 +1,6 @@
 # Specifies the routes for the application
 
+from sqlite3 import Timestamp
 from src.models import Message
 from src import app, db, socketio
 from flask_login import current_user, login_required
@@ -254,7 +255,7 @@ def message_board():
     if not class_id:
         return "Class ID is required", 400
 
-    messages = Message.query.filter_by(unit_id=class_id).all()
+    messages = Message.query.filter_by(unit_id=class_id).limit(4).all()
 
     return render_template('message_board.html', messages=messages, class_id=class_id, current_user=current_user)
 
@@ -280,8 +281,11 @@ def search():
         return render_template('search.html', 
                                form=form, 
                                searched=Message.searched,
-                               messages=messages)  
+                               messages=messages)
    
+   messages = messages.limit(4)
+   
+   return render_template('search.html', form=form, messages=messages)
 
 
 @app.route('/profile')
