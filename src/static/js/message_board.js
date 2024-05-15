@@ -34,6 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
             messageInput.value = '';
             messageLabelInput.value = '';
             parentIdInput.value = '';
+            // This is an attempt to refresh the page after the reply is posted to fix the reply issue
+            // setTimeout(() => {
+            //     window.location.reload();
+            // },500);
         }
     });
 
@@ -64,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (replyText !== '') {
                     sendMessage(replyText, parentId, '', unitCode);
                     replyForm.remove();
+
                 }
             };
         }
@@ -72,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.classList.contains('delete-btn')) {
             const messageId = event.target.getAttribute('data-message-id');
             deleteMessage(messageId);
+
         }
     });
     // event handler for recieving new message
@@ -79,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const messageList = document.getElementById('messages');
         const messageItem = document.createElement('li');
         messageItem.setAttribute('data-message-id', data.message_id);
+        messageItem.classList.add('message-item');
 
         // if label then add to message
         if (data.label && data.label.trim() !== '') {
@@ -86,20 +93,18 @@ document.addEventListener('DOMContentLoaded', () => {
             labelElement.textContent = data.label;
             labelElement.className = 'message-label';
             messageItem.appendChild(labelElement);
+
         }
 
         // add content and username
         const contentElement = document.createElement('div');
-        contentElement.textContent = `${data.username}: ${data.text}`;
+        // contentElement.textContent = `${data.username}: ${data.text}`;
         contentElement.className = 'message-content';
-        messageItem.appendChild(contentElement);
+        // messageItem.appendChild(contentElement);
+        messageItem.innerHTML = `${data.username}: ${data.text}`;
 
-        // add reply button
-        const replyButton = document.createElement('button');
-        replyButton.textContent = 'Reply';
-        replyButton.className = 'reply-btn';
-        replyButton.setAttribute('data-message-id', data.message_id);
-        messageItem.appendChild(replyButton);
+
+    
 
         // add delete button only if username matches current user or site admin
         if (data.user_id == current_user_id || current_user_role === 'admin') {
@@ -109,19 +114,30 @@ document.addEventListener('DOMContentLoaded', () => {
             deleteButton.setAttribute('data-message-id', data.message_id);
             messageItem.appendChild(deleteButton);
         }
-        //  empty list for replies
-        const repliesList = document.createElement('ul');
-        repliesList.className = 'replies';
-        messageItem.appendChild(repliesList);
+        
 
         // Append to message as reply to parent message if it exists else to main
         if (data.parent_id) {
             const parentMessage = document.querySelector(`[data-message-id='${data.parent_id}'] .replies`);
             if (parentMessage) {
                 parentMessage.appendChild(messageItem);
+
+
             }
         } else {
+            //  empty list for replies
+            const repliesList = document.createElement('ul');
+            repliesList.className = 'replies';
+            messageItem.appendChild(repliesList);
+
+            const replyButton = document.createElement('button');
+            replyButton.textContent = 'Reply';
+            replyButton.className = 'reply-btn';
+            replyButton.setAttribute('data-message-id', data.message_id);
+            messageItem.appendChild(replyButton);
             messageList.appendChild(messageItem);
+
+
         }
     });
     //  Delete event
@@ -138,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// This project includes code generated with the assistance of git-hub copilot
 // This project includes code generated with the assistance of OpenAI's ChatGPT.
 // Consulted ChatGPT for help with implementing the edit and delete features, WebSocket event handling, and ensuring that users can only edit or delete their own messages, except for administrators who can delete any message.
 
