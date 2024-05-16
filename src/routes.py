@@ -255,7 +255,7 @@ def message_board():
     if not class_id:
         return "Class ID is required", 400
 
-    messages = Message.query.filter_by(unit_id=class_id).limit(4)
+    messages = Message.query.filter_by(unit_id=class_id).all()
 
     return render_template('message_board.html', messages=messages, class_id=class_id, current_user=current_user)
 
@@ -276,14 +276,14 @@ def search():
         Message.searched = form.searched.data
         #Query the database of messages
         messages = messages.filter(Message.label.like('%' + Message.searched + '%'))
-        messages = messages.order_by(Message.timestamp).limit(4)
+        messages = messages.order_by(Message.timestamp).all()
 
         return render_template('search.html', 
                                form=form, 
                                searched=Message.searched,
                                messages=messages)
    
-   messages = messages.limit(4)
+   messages = messages
    
    return render_template('search.html', form=form, messages=messages)
 
