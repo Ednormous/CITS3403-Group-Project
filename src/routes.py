@@ -14,7 +14,7 @@ from flask_socketio import emit
 from src import app, db, socketio, mail, s
 from src.models import User, Message
 from datetime import datetime
-from webforms import searchForm, LoginForm
+from webforms import searchForm, loginForm, registerForm
 
 # Homepage
 
@@ -42,53 +42,54 @@ def contact():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     
-    form = LoginForm()
+    form = loginForm()
 
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-    if request.method == 'POST':
-        # Extract credentials from form data
-        username = request.form['username']
-        password = request.form['password']
 
-        print(password)
+    #if request.method == 'POST':
+        # Extract credentials from form data
+    #    username = request.form['username']
+    #    password = request.form['password']
+
+    #    print(password)
         # Query the database for the user
         user = User.query.filter_by(username=username).first()
 
         # If credentials are correct, then redirect
         if user and check_password_hash(user.password, password):
             login_user(user)
-            print("user role is: ", user.role)
+            flash('Login successful.', 'success')
 
             # Role == admin
             if user.role == 'admin':
-                flash('Login successful.', category='success')
+                #flash('Login successful.', category='success')
                 return redirect(url_for('admin'))
 
             # Role == tutor
             elif user.role == 'tutor':
-                flash('Login successful.', category='success')
+                #flash('Login successful.', category='success')
                 return redirect(url_for('tutor', username=user.username))
 
             # Role == student
             elif user.role == 'student':
-                flash('Login successful.', category='success')
+                #flash('Login successful.', category='success')
                 # print("user name is: ", user.username)
                 return redirect(url_for('student', username=user.username))
 
             # Unassigned Role
             else:
                 # Redirect to another page if the user is not a student
-                flash('Login successful.', category='success')
+                #flash('Login successful.', category='success')
                 return redirect(url_for('dummy_login'))
         else:
             # Message to indicate user has incorrect credentials
-            flash('Login failed. Please check your credentials and try again.')
+            flash(f'Login failed. Please check your credentials and try again.', 'error')
             return redirect(url_for('login'))
     else:
         # GET request, show the login page
-        return render_template('login.html')
+        return render_template('login.html', form=form)
 
 # Register page
 
@@ -96,20 +97,20 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
+    form = registerForm()
+
     # If the user submits the form
-    if request.method == 'POST':
-        retrieved_username = request.form.get('username')
-        retrieved_password = request.form.get('password')
-        retrieved_email = request.form.get('email')
+    if form.validate_on_submit():
+        retrieved_username = form.username.data
+        retrieved_password = form.password.data
+        retrieved_email = form.email.data
         # retrieved_first_name = request.form.get('firstname')
         # retrieved_last_name = request.form.get('lastname')
 
-        existing_user = User.query.filter_by(
-            username=retrieved_username).first()
+        existing_user = User.query.filter_by(username=retrieved_username).first()
         if existing_user:
             # Indicates that the username already exists
-            flash('Username already exists. Please choose a different one.',
-                  category='error')
+            flash(f'Username already exists. Please choose a different one.', 'error')
         else:
             # Check if the email's domain is 'amazingEdu.com.au'
             domain = retrieved_email.split('@')[-1]
@@ -152,8 +153,8 @@ def register():
             #     return redirect(url_for('register'))
             # return redirect(url_for(confirm_email))
 
-    flash('Please fill out the form.', category='error')
-    return render_template('register.html')
+    #flash('Please fill out the form.', category='error')
+    return render_template('register.html', form=form)
 
 
 # The following would probably not be implemented

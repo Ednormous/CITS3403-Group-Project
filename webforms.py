@@ -6,7 +6,13 @@ class searchForm(FlaskForm):
     searched = StringField('searched', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
-class LoginForm(FlaskForm):
+class loginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
+class registerForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    submit = SubmitField('Register')
