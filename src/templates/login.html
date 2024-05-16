@@ -6,23 +6,24 @@
     <section id="login">
         <h1>Please enter your details below</h1>
         <form action="/login" method="post">
+            {{ form.hidden_tag() }}
             <div class="form-group">
-                <label for="username">Username / Email:</label>
-                <input type="text" id="username" name="username" required>
+                {{ form.username.label }}
+                {{ form.username }}
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                {{ form.password.label }}
+                {{ form.password }}
             </div>
 
             <div class="form-group">
-                <button type="submit" class = 'button'>Login</button>
+                {{ form.submit(class="button")}}
             </div>
-            <label for="remember_me">
-                <input type="checkbox" id="remember_me" name="remember_me">
-                Remember me<br><br>
-            </label>
-            <div class="links">
+            <div>
+                {{ form.remember_me(class="form-checkinput") }}
+                {{ form.remember_me.label(class="form-checklabel") }}
+            <div/>
+            <div class="links"> 
                 <a href="/forgot-password">Forgot Password?</a><br><br>
             </div>
             <div class="links">
