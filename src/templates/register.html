@@ -19,6 +19,11 @@
         </div>
 
         <div class="form-group">
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password(class="form-control") }} 
+        </div>
+
+        <div class="form-group">
             {{ form.email.label }}
             {{ form.email }}
         </div>
