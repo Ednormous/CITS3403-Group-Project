@@ -13,7 +13,7 @@ from flask_socketio import emit
 from src import app, db, socketio, mail, s
 from src.models import User, Message
 from datetime import datetime
-from webforms import searchForm
+from webforms import searchForm, LoginForm
 
 # Homepage
 
@@ -40,6 +40,12 @@ def contact():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
     if request.method == 'POST':
         # Extract credentials from form data
         username = request.form['username']
@@ -81,7 +87,7 @@ def login():
             return redirect(url_for('login'))
     else:
         # GET request, show the login page
-        return render_template('index.html')
+        return render_template('login.html')
 
 # Register page
 
