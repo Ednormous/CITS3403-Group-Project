@@ -28,10 +28,12 @@ body, html {
 
 .container {
     display: flex;
-    height: calc(100% - 40px); /* Adjust based on header height */
+    height: auto;
+    min-height: calc(100% - 40px); /* Adjust based on header height */
 }
 
 .sidebar {
+    height: auto;
     flex-basis: 200px;
     background-color: rgb(29, 154, 73);
     color: white;
