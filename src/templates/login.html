@@ -19,10 +19,10 @@
             <div class="form-group">
                 {{ form.submit(class="button")}}
             </div>
-            <label for="remember_me">
-                <input type="checkbox" id="remember_me" name="remember_me">
-                Remember me<br><br>
-            </label>
+            <div>
+                {{ form.remember_me(class="form-checkinput") }}
+                {{ form.remember_me.label(class="form-checklabel") }}
+            <div/>
             <div class="links"> 
                 <a href="/forgot-password">Forgot Password?</a><br><br>
             </div>

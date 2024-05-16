@@ -614,3 +614,12 @@ img{
 .reply-btn {
     cursor: pointer;
 }
+
+.form-checkinput {
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+.form-checklabel {
+    display: inline-block;
+}
+

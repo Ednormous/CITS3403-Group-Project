@@ -47,6 +47,7 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
+        remember = form.remember_me.data
 
     #if request.method == 'POST':
         # Extract credentials from form data
@@ -59,7 +60,7 @@ def login():
 
         # If credentials are correct, then redirect
         if user and check_password_hash(user.password, password):
-            login_user(user)
+            login_user(user, remember=remember)
             flash('Login successful.', 'success')
 
             # Role == admin
