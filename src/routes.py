@@ -1,5 +1,6 @@
 # Specifies the routes for the application
 
+from sqlite3 import Timestamp
 from src.models import Message
 from src import app, db, socketio
 from flask_login import current_user, login_required
@@ -286,8 +287,11 @@ def search():
         return render_template('search.html', 
                                form=form, 
                                searched=Message.searched,
-                               messages=messages)  
+                               messages=messages)
    
+   messages = messages
+   
+   return render_template('search.html', form=form, messages=messages)
 
 
 @app.route('/profile')

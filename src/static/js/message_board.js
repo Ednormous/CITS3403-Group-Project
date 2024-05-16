@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
             messageLabelInput.value = '';
             parentIdInput.value = '';
             // This is an attempt to refresh the page after the reply is posted to fix the reply issue
-            // setTimeout(() => {
-            //     window.location.reload();
-            // },500);
+            setTimeout(() => {
+                window.location.reload();
+            },500);
         }
     });
 
