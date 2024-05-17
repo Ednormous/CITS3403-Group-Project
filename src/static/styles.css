@@ -623,3 +623,85 @@ img{
     display: inline-block;
 }
 
+/* Contact Page */
+
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.contact-info, .enrol-info, .contact-socials {
+    width: 100%;   
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.contact-info p, .enrol-info p, .contact-socials p {
+    margin: 10px 0;
+    max-width: 100%;
+    line-height: 1.5;
+    font-size: 1.2rem;
+}
+
+.contact-info ul, .enrol-info ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.contact-socials ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-info ul li, .enrol-info ul li {
+    margin: 5px 0;
+    padding-left: 0;
+}
+
+.contact-socials ul li {
+    margin: 0 10px;
+    padding-left: 0;
+}
+
+
+.contact-info h2, .enrol-info h2, .contact-socials h2 {
+    margin-bottom: 10px;
+}
+
+/* Add this to ensure paragraphs use the full width of the container */
+.contact-info p, .enrol-info p {
+    width: 100%;
+}
+
+.contact-location {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 30%;
+    height: auto;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+}
+
+.social-icon {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
