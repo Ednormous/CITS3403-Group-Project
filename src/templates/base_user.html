@@ -17,7 +17,6 @@
         <aside class="sidebar">
             <a href="{{ url_for('student', username=current_user.username) }}" class="nav-btn">Welcome</a>
             <a href="javascript:void(0);" class="nav-btn" data-url="{{ url_for('timetable') }}" onclick="loadContent(this)">Timetable</a>
-            <!-- <a href="{{ url_for('forums') }}" class="nav-btn">Forums</a> -->
             <a href="javascript:void(0);" class="nav-btn" data-url="{{ url_for('forums') }}" onclick="loadContent(this)">Forum</a>
         </aside>
         <main id="main-content">
@@ -29,3 +28,7 @@
     <script src="{{ url_for('static', filename='user.js') }}"></script>
 </body>
 </html>
+
+
+
+
