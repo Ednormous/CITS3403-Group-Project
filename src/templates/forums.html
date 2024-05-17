@@ -1,19 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-
-    <h1>
-        Chose from the Units below.....
-        
-    </h1>
-
-    <div>
-        <a href="{{url_for('message_board', class_id='CITS1401')}}">CITS1401</a>
-        <a href="{{url_for('message_board', class_id='CITS2401')}}">CITS2401</a>
-        <a href="{{url_for('message_board', class_id='CITS3401')}}">CITS3401</a>
-        <a href="{{url_for('message_board', class_id='MATH1001')}}">MATH1001</a>
-        <a href="{{url_for('message_board', class_id='ENGL1001')}}">ENGL1001</a>
-    </div>
-</html>
 
 
+{% block content %}
+<style>
+    #main-content {
+        padding: 20px;
+        background-color: #e2e7d3;
+    }
 
+    h1 {
+        text-align: center;
+    }
+
+    .unit-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        text-decoration: none;
+        color: black;
+    }
+
+    .card:hover {
+        background-color: #a0d468;
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+
+    .card-description {
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+
+    .card-code {
+        font-weight: bold;
+    }
+</style>
+
+<h1>Choose from the Units below.....</h1>
+<div class="unit-container">
+    <a class="card" href="{{ url_for('message_board', class_id='CITS1401') }}">
+        <div class="card-title">Introduction to Python</div>
+        <div class="card-description">Learn the fundamentals of Python programming language and start building your own applications</div>
+        <div class="card-code">CITS1401</div>
+    </a>
+    <a class="card" href="{{ url_for('message_board', class_id='CITS2401') }}">
+        <div class="card-title">Data Science Essentials</div>
+        <div class="card-description">Explore the world of data science and learn how to analyse and visualise data using popular tools and techniques.</div>
+        <div class="card-code">CITS2401</div>
+    </a>
+    <a class="card" href="{{ url_for('message_board', class_id='CITS3401') }}">
+        <div class="card-title">Web Development</div>
+        <div class="card-description">Master the skills of front-end and back-end web development and build dynamic and responsive websites.</div>
+        <div class="card-code">CITS3401</div>
+    </a>
+    <a class="card" href="{{ url_for('message_board', class_id='MATH1001') }}">
+        <div class="card-title">Pre-Calculus</div>
+        <div class="card-description">Get a head start on your calculus journey by mastering the essential concepts of pre-calculus.</div>
+        <div class="card-code">MATH1001</div>
+    </a>
+    <a class="card" href="{{ url_for('message_board', class_id='ENGL1001') }}">
+        <div class="card-title">Historical Literature</div>
+        <div class="card-description">Explore the rich tapestry of historical literature and gain insights into the past.</div>
+        <div class="card-code">ENGL1001</div>
+    </a>
+</div>
+{% endblock %}
+
+
+<!-- // This project includes code generated with the assistance of git-hub copilot
+// This project includes code generated with the assistance of OpenAI's ChatGPT.
+// Consulted ChatGPT for help with implementing the edit and delete features, WebSocket event handling, and ensuring that users can only edit or delete their own messages, except for administrators who can delete any message.
+
+// **Citation:**
+// ChatGPT, OpenAI. “Flask WebSocket Message Board Code Assistance.” ChatGPT, OpenAI, 2024. -->

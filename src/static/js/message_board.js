@@ -1,4 +1,4 @@
-// // // this Js doc is the server-side for the message board/
+// // // this Js doc doc handles the client-side for the message board and communicates to the backend server and database/
 
 // Waits for the entire documnet to load before going on to execute the script
 document.addEventListener('DOMContentLoaded', () => {
