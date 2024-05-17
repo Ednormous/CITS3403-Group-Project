@@ -4,24 +4,48 @@
 
 {% block content %}
     <section class="contact">
-        <h2>Get in Touch</h2>
-        <p>Have questions or feedback? We'd love to hear from you!</p>
-        <ul>
-            <li>Email: info@tuitiontalk.com</li>
-            <li>Phone: +61 0452 731 688</li>
-        </ul>
-
-        <h2>Would you like to enrol?</h2>
-        <p>Please email our admin at:</p>
-        <ul>
-            <li>Email: admin@tuitiontalk.com</li>
-            <li>Phone: +61 0452 731 689</li>
-        </ul>
-
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>Have questions or feedback? We'd love to hear from you!</p>
+                <ul>
+                    <li>Email: info@tuitiontalk.com</li>
+                    <li>Phone: +61 0452 731 688</li>
+                </ul>
+            </div>
+            <div class="enrol-info">
+                <h2>Would you like to enrol?</h2>
+                <p>Please email our admin at:</p>
+                <ul>
+                    <li>Email: admin@tuitiontalk.com</li>
+                    <li>Phone: +61 0452 731 689</li>    
+                </ul>
+            </div>
+            <div class="contact-socials">
+                <h2>Connect with Us</h2>
+                <p>Our socials</p>
+                <ul>
+                    <li>
+                        <a href="https://www.instagram.com/TuitionTalks/" target="_blank" class="social-link">
+                            <img src="{{ url_for('static', filename='/images/Instagram_icon.png') }}" alt="Instagram" class="social-icon">
+                            @TuitionTalks
+                        </a>
+                    </li>
+                    <br>
+                    <li>
+                        <a href="https://www.facebook.com/TuitionTalks/" target="_blank" class="social-link">
+                            <img src="{{ url_for('static', filename='/images/Facebook_icon.png') }}" alt="Facebook" class="social-icon">
+                            @TuitionTalks
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
         <p>
-            Alternatively, you can visit our center @ 1 Perth Street, Perth, WA 6000.<br>
-
-            ////Insert MAPPPPP!!
+            Alternatively, you can visit our center @ 28 Bronte Street, Perth, WA 6004.<br>
+            
+            <img class="contact-location" src="{{ url_for('static', filename='/images/TuitionTalkLocation.png') }}" alt="Map of the building location">
         </p>
     </section>
 {% endblock %}
