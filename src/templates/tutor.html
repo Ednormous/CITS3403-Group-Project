@@ -1,2 +1,9 @@
-This is the tutor page
+{% extends "base_user.html" %}
 
+{% block content %}
+<h1>
+    Welcome {{ current_user.username }}!
+</h1>
+
+
+{% endblock %}
