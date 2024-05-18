@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TuitionTalk{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('main.static', filename='/styles.css') }}">
     <link rel="icon" type="image/png", sizes="32x32" href = ../static/images/CompanyFavicon.png>
 </head>
 
@@ -15,7 +15,7 @@
     </div>
     <div class="nav-container">
         <div class="logo">
-            <img src="{{ url_for('static', filename='/images/TuitionTalkLogo.png') }}" alt="Logo", style="size: 100px;">
+            <img src="{{ url_for('main.static', filename='/images/TuitionTalkLogo.png') }}" alt="Logo", style="size: 100px;">
         </div>
         <div class="nav-toggle">
             <span></span>
@@ -29,11 +29,11 @@
         <div class="nav-overlay"></div>
         <div class="nav-bar">
             <!-- Button for the links -->
-            <a href="{{url_for('home')}}">Home Page</a>
-            <a href="{{url_for('about')}}">About</a>
-            <a href="{{url_for('contact')}}">Contact</a>
-            <a href="{{url_for('login')}}">Login</a>
-            <a href="{{url_for('register')}}">Register</a>
+            <a href="{{url_for('main.home')}}">Home Page</a>
+            <a href="{{url_for('main.about')}}">About</a>
+            <a href="{{url_for('main.contact')}}">Contact</a>
+            <a href="{{url_for('main.login')}}">Login</a>
+            <a href="{{url_for('main.register')}}">Register</a>
 
         </div>
     </div>

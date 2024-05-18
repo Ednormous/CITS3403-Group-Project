@@ -1,8 +1,8 @@
-# Specifies the routes for the application
+# Specifies the routes for the mainlication
 
 from sqlite3 import Timestamp
 from src.models import Message
-from src import app, db, socketio
+from src import socketio, db #, main ---------------------------- This line is not needed
 from flask_login import current_user, login_required
 from flask import request, jsonify, abort
 from flask import request, render_template, flash, redirect, url_for, abort
@@ -11,7 +11,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from flask_mail import Message
 from flask_socketio import emit
-from src import app, db, socketio, mail, s
+# from src import mail, s        #, main, db, socketio duplicates & added blueprint to resolve circular import p
+from src.blueprints import main
 from src.models import User, Message
 from datetime import datetime
 from webforms import searchForm, loginForm, registerForm
@@ -19,27 +20,27 @@ from webforms import searchForm, loginForm, registerForm
 # Homepage
 
 
-@app.route('/')
+@main.route('/')
 def home():
     return render_template('homepage.html')
 
 # About page
 
 
-@app.route('/about')
+@main.route('/about')
 def about():
     return render_template('about.html')
 
 # Contact page
 
 
-@app.route('/contact')
+@main.route('/contact')
 def contact():
     return render_template('contact.html')
 
 # Login page
 
-@app.route('/login', methods=['GET', 'POST'])
+@main.route('/login', methods=['GET', 'POST'])
 def login():
     
     form = loginForm()
@@ -66,28 +67,28 @@ def login():
             # Role == admin
             if user.role == 'admin':
                 #flash('Login successful.', category='success')
-                return redirect(url_for('admin'))
+                return redirect(url_for('main.admin'))
 
             # Role == tutor
             elif user.role == 'tutor':
                 #flash('Login successful.', category='success')
-                return redirect(url_for('tutor', username=user.username))
+                return redirect(url_for('main.tutor', username=user.username))
 
             # Role == student
             elif user.role == 'student':
                 #flash('Login successful.', category='success')
                 # print("user name is: ", user.username)
-                return redirect(url_for('student', username=user.username))
+                return redirect(url_for('main.student', username=user.username))
 
             # Unassigned Role
             else:
                 # Redirect to another page if the user is not a student
                 #flash('Login successful.', category='success')
-                return redirect(url_for('dummy_login'))
+                return redirect(url_for('main.dummy_login'))
         else:
             # Message to indicate user has incorrect credentials
             flash(f'Login failed. Please check your credentials and try again.', 'error')
-            return redirect(url_for('login'))
+            return redirect(url_for('main.login'))
     else:
         # GET request, show the login page
         return render_template('login.html', form=form)
@@ -95,7 +96,7 @@ def login():
 # Register page
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@main.route('/register', methods=['GET', 'POST'])
 def register():
 
     form = registerForm()
@@ -132,14 +133,14 @@ def register():
 
             # Indicates regisration was successful
             flash('Registration successful.', category='success')
-            return redirect(url_for('login'))
+            return redirect(url_for('main.login'))
             # !!!!!!!!!!!!!!!!!!!!!!!!!!!! #
             # The following does not work
 
             # # Redirects user to login page
             # # TODO: Prompt user to verify their email address with a verification code
             # token = s.dumps(retrieved_email, salt='email-confirm-salt')
-            # confirm_url = url_for('confirm_email', token=token, _external=True)
+            # confirm_url = url_for('main.confirm_email', token=token, _external=True)
 
             # # Send email to user
             # msg = Message('Confirm your Email', recipients=[retrieved_email])
@@ -151,48 +152,48 @@ def register():
             #     print(e)
             #     flash('Failed to send email. Please try again later.',
             #           category='error')
-            #     return redirect(url_for('register'))
+            #     return redirect(url_for('main.register'))
             # return redirect(url_for(confirm_email))
 
     #flash('Please fill out the form.', category='error')
     return render_template('register.html', form=form)
 
 
-# The following would probably not be implemented
-@app.route('/confirm_email/<token>')
-def confirm_email(token):
-    try:
-        email = s.loads(token, salt='email-confirm-salt', max_age=3600)
-        user = User.query.filter_by(email=email).first()
-        user.email_verified = True
-        db.session.commit()
-        flash('Email confirmed.', category='success')
-    except SignatureExpired:
-        flash('The confirmation link has expired.', category='error')
-    return redirect(url_for('login'))
+# # The following would probably not be implemented
+# @main.route('/confirm_email/<token>')
+# def confirm_email(token):
+#     try:
+#         email = s.loads(token, salt='email-confirm-salt', max_age=3600)
+#         user = User.query.filter_by(email=email).first()
+#         user.email_verified = True
+#         db.session.commit()
+#         flash('Email confirmed.', category='success')
+#     except SignatureExpired:
+#         flash('The confirmation link has expired.', category='error')
+#     return redirect(url_for('main.login'))
 
 # Forgot password page
 
 
-@app.route('/forgot-password')
+@main.route('/forgot-password')
 def forgot_password():
     return render_template('forgot-password.html')
 
 
-@app.route('/dummy_login')
+@main.route('/dummy_login')
 @login_required
 def dummy_login():
     return render_template('dummy_login.html')
 
 
-@app.route('/logout')
+@main.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('main.home'))
 
 
-@app.route('/tutor/<username>')
+@main.route('/tutor/<username>')
 @login_required
 def tutor(username):
     if username != current_user.username and not current_user.is_admin:
@@ -200,7 +201,7 @@ def tutor(username):
     return render_template('tutor.html', user=current_user)
 
 
-@app.route('/admin')
+@main.route('/admin')
 @login_required
 def admin():
     # Need to implement conditions to check if user is an admin
@@ -214,7 +215,7 @@ def admin():
         return render_template('login')
 
 
-@app.route('/student/<username>')
+@main.route('/student/<username>')
 @login_required
 def student(username):
     if username != current_user.username and not current_user.is_admin:
@@ -222,7 +223,7 @@ def student(username):
     return render_template('student.html', user=current_user)
 
 
-@app.route('/create_user', methods=['POST'])
+@main.route('/create_user', methods=['POST'])
 def create_user():
     if not current_user.is_authenticated or current_user.role != 'admin':
         # Only allow admins to access this route
@@ -240,10 +241,10 @@ def create_user():
     db.session.commit()
 
     flash('User created successfully.', category='success')
-    return redirect(url_for('admin'))
+    return redirect(url_for('main.admin'))
 
 
-# @app.route('/message_board')
+# @main.route('/message_board')
 # def message_board():
 #     class_id = request.args.get('class_id')
 #     if not class_id:
@@ -256,7 +257,7 @@ def create_user():
 
 # from flask_login import current_user, login_required
 
-@app.route('/message_board')
+@main.route('/message_board')
 @login_required
 def message_board():
     class_id = request.args.get('class_id')
@@ -269,13 +270,13 @@ def message_board():
 
 
 #Pass information to nav-bar
-@app.context_processor
+@main.context_processor
 def base():
     form = searchForm()
     return dict(form=form)
 
 #Create search function
-@app.route('/search', methods=['POST'])
+@main.route('/search', methods=['POST'])
 def search():
    form = searchForm()
    messages = Message.query 
@@ -296,25 +297,25 @@ def search():
    return render_template('search.html', form=form, messages=messages)
 
 
-@app.route('/profile')
+@main.route('/profile')
 @login_required
 def profile():
     return render_template('profile.html', user=current_user)
 
 
-@app.route('/timetable')
+@main.route('/timetable')
 @login_required
 def timetable():
     return render_template('timetable.html')
 
 
-@app.route('/settings')
+@main.route('/settings')
 @login_required
 def settings():
     return render_template('settings.html')
 
 
-@app.route('/forums')
+@main.route('/forums')
 @login_required
 def forums():
     return render_template('forums.html')
