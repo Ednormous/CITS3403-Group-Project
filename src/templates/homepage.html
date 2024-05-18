@@ -4,11 +4,11 @@
 
 {% block content %}
     <div class="top-image">
-        <img src="{{ url_for('static', filename='/images/ImageGeneratedByChatGPT(Classroom).png') }}" alt="CollaborativeClassroom", style="size: 100px;" >
+        <img src="{{ url_for('main.static', filename='/images/ImageGeneratedByChatGPT(Classroom).png') }}" alt="CollaborativeClassroom", style="size: 100px;" >
         <div class="image-text">
             <h2>Welcome to Our Learning Community!</h1>
             <p>Join us to expand your knowledge with the best courses and resources.</p>
-            <a href="{{url_for('register')}}" class="button">Get Started</a>
+            <a href="{{url_for('main.register')}}" class="button">Get Started</a>
         </div>
     </div>
     <h1>Featured Courses</h1>

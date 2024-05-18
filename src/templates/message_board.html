@@ -204,7 +204,7 @@
             <br/>
 
             <div class="container-search" id="searchbar">
-                <form method="POST" action="{{ url_for('search')}}" class="d-flex">
+                <form method="POST" action="{{ url_for('main.search')}}" class="d-flex">
                     {{ form.hidden_tag() }}
                     <input class="form-control me-2" type="search" placeholder="Search" 
                     aria-label="Search" name="searched">
@@ -269,7 +269,7 @@
         </form>
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
-        <script src="{{ url_for('static', filename='js/message_board.js') }}" defer></script>
+        <script src="{{ url_for('main.static', filename='js/message_board.js') }}" defer></script>
     </body>
 </html>
     
