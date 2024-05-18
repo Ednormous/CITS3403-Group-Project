@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-    <h1>
-        This is the profile page
-    </h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+</head>
+<body>
+    <h1>Welcome!</h1>
+    
+    <h2>
+        Name: {{ current_user.username }}<br>
+        Email: {{ current_user.email }}<br>
+        Role: {{ current_user.role }}
+    </h2>
+    
+    <p>
+        Welcome to your User portal! From here, you can access your timetable and our message board where you can communicate with our team and other students enrolled in your course. 
+    </p>
+    <p>
+        Please check for updates to ensure the best learning outcomes.
+    </p>
+    <p>
+        We are excited to have you on board and look forward to supporting your learning journey.
+    </p>
+</body>
 </html>
