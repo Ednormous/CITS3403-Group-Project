@@ -80,8 +80,18 @@ The Administrator dashboard is specific to the administrator from the enterprise
 
 ## Application Architecture
 
+   ### Frontend(Client-Side)
+   -   HTML/CSS/JavaScript is used for web page structure, styling and interactivity.
+   -   Flask Templates (jinja2) Allows dynamic interaction with the backend.
+   -   WebSocket: Establishes connectivity between client and server.
+   -   Message Board: Dom manipulation handled by JS to update UI during user interactions.
 
-
+   ### Backend(Server-Side)
+   -   Flask: Handles HTTP requests and serves HTML templates and provides RESTful APIs for operations.
+   -   Flask-SocketIO: Support and enable real-time bi-directional communication between client and server.
+   -   Database: SQLAlchemy used to manage database operations.
+   -   WebSocket Event Handlers: Process events, listen and emit responses.
+     
 
 ## Launch Instructions
 To run the app, simply enter in the terminal: 
