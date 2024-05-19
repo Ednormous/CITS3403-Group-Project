@@ -5,9 +5,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from src import create_app, db
 from config import TestConfig
-from src.test_data import add_test_user_to_db  
+from src.test_data import add_test_user_to_db
 
 localHost = "http://localhost:5000"
+
 
 class SeleniumTestCase(TestCase):
 
@@ -31,13 +32,14 @@ class SeleniumTestCase(TestCase):
         self.server_process.terminate()
         self.driver.close()
 
-
     def test_home_page(self):
         time.sleep(10)
         self.assertTrue(True)
 
         loginElement = self.driver.find_element(By.ID, "login")
         loginElement.send_keys("wesdutton")
-        
-       
-        
+
+
+# This page includes code generated with the assistance of git-hub copilot & ChatGTP
+
+# **Citation:** ChatGPT, OpenAI, 2024.
