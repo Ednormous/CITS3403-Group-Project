@@ -3,46 +3,128 @@
 {% block title %}Our Tutors - AmazingEdu{% endblock %}
 
 {% block content %}
-    <section class = "mission">
-        <h1>Our Mission</h1>
-        <p>At TuitionTalk, we believe in the power of education to transform lives. Our mission is to provide accessible, high-quality learning experiences to students worldwide.</p>
-    </section>
+    <style>
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-    <section class="team">
-        <h2>Meet Our Team</h2>
-        <section id="tutors">
-            <div class="tutor-container">
-                <div class="tutor-info">
-                    <h3>Tayla Reed</h3>
-                    <p>Tayla Reed graduated from the University of Western Australia with a Bachelor of Advanced Computer Science in 2015 and has amassed nearly a decade of experience in the IT Industry. Her practical and industry based knowledge will prove to be most useful when teaching students enhanced coding practices and skills that will be highly appreciated in their future studies and careers.</p>
+        .section {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .section h1, .section h2 {
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .tutor-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .tutor-info {
+            flex: 1 1 45%;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 0;
+        }
+
+        .timeline {
+            display: flex;
+            gap: 20px;
+        }
+
+        .timeline-event {
+            flex: 0 0 200px;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            white-space: normal;
+        }
+
+        .timeline-event h3 {
+            margin-bottom: 5px;
+        }
+
+        .mission-content {
+            display: flex;
+            gap: 20px;
+        }
+
+        .mission-content .sub-section {
+            flex: 1;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+    <div class="content-container">
+        <section class="section mission">
+            <h1>Our Mission</h1>
+            <p>At TuitionTalks, we believe in the transformative power of education. We believe that communication between our students, tutors, and even our admins enhances the efficiency and effectiveness of study. Our mission is to provide accessible, high-quality learning experiences to students worldwide, empowering them to achieve their fullest potential.</p>
+            <div class="mission-content">
+                <div class="sub-section">
+                    <h2>Dedicated Tutors</h2>
+                    <p>Over half of our distinguished tutors had 5 years or above of professional tutoring. They have expertise in many fields, including Computer Science, English, Mathematics, Literature and so on. We are dedicated to bring you the most effective and rewarding experience during your times with us.</p>
                 </div>
-                <div class="tutor-info">
-                    <h3>Michael Jenkins</h3>
-                    <p>Michael Jenkins also graduated from the University of Western Australia with a Bachelor of Mathematics and a Bachelor of English and Literary Studies. He has now turned his focus towards taking his advanced knowledge and teaching new students these essential subjects to shine new light on the areas that students may struggle with thanks to his innovative teaching methods.</p>
+                <div class="sub-section">
+                    <h2>Well-Designed Curriculum</h2>
+                    <p>Efficiency is the core of effective studying, which is precisely why we have crafted a specialized curriculum tailored to your needs. Our teaching approach is supported by the use of trusted educational resources from well know authors and publishers. To further enhance the learning experience, we concentrate on one specific topic every one or two weeks. Furthermore, our enthusiastic tutors meticulously handpick take-home and in-class exercises based on your individual strengths and weaknesses, ensuring optimal instruction quality. With personalised feedback provided regularly to both students and parents, our approach is designed to track and celebrate your progress.</p>
                 </div>
             </div>
         </section>
-    </section>
-    <section class="history">
-        <h2>Our Journey</h2>
-        <p>TuitionTalk was founded in 2023 with a vision to revolutionize online education. Since then, we have grown to become a trusted platform for learners seeking to expand their knowledge and skills.</p>
-        <!-- Add timeline or milestones here -->
-    </section>
 
-    <section class="partnerships">
-        <h2>Our Partners</h2>
-        <!-- Add logos or names of partner institutions or organizations here -->
-    </section>
+        <section class="section team">
+            <h2>Meet Our Team</h2>
+            <div id="tutors" class="tutor-container">
+                <div class="tutor-info">
+                    <h3>Tayla Reed</h3>
+                    <p>Tayla Reed graduated from the University of Western Australia with a Bachelor of Advanced Computer Science in 2015. With nearly a decade of experience in the IT industry, Tayla brings practical and industry-based knowledge to her teaching. Her expertise in coding practices and skills is invaluable for students aiming to excel in their future studies and careers.</p>
+                </div>
+                <div class="tutor-info">
+                    <h3>Michael Jenkins</h3>
+                    <p>Michael Jenkins graduated from the University of Western Australia with a Bachelor of Mathematics and a Bachelor of English and Literary Studies. His advanced knowledge in these essential subjects, combined with his innovative teaching methods, helps students overcome challenges and gain new insights into their studies.</p>
+                </div>
+            </div>
+        </section>
 
-    <section class="press">
-        <h2>In the News</h2>
-        <!-- Add press mentions or media logos here -->
-    </section>
-
-
+        <section class="section history">
+            <h2>Our Journey</h2>
+            <p>Founded in 2023, TutitionTalks set out with a vision to revolutionise online education. Our platform has grown into a trusted resource for learners seeking to expand their knowledge and skills. From our humble beginnings to our current success, we remain dedicated to fostering educational excellence.</p>
+            <div class="timeline-container">
+                <div class="timeline">
+                    <div class="timeline-event">
+                        <h3>2023</h3>
+                        <p>Launch of TuitionTalks with a mission to provide accessible, high-quality online education.</p>
+                    </div>
+                    <div class="timeline-event">
+                        <h3>2024</h3>
+                        <p>Expanded our team of expert tutors and introduced new courses in emerging fields.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 {% endblock %}
 
+<!-- This page includes code generated with the assistance of GitHub Copilot & ChatGPT -->
 
-    <!-- This page includes code generated with the assistance of git-hub copilot & ChatGTP -->
-
-    <!-- **Citation:** ChatGPT, OpenAI, 2024. -->
+<!-- **Citation:** ChatGPT, OpenAI, 2024. -->
