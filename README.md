@@ -114,6 +114,6 @@ Feel free to register as a student in order to assess the application capabilite
 Administrator
  - Username: Marker
  - Passowrd: Marker
- - Email: Marker@tuitiontalks.com
+
 
 
