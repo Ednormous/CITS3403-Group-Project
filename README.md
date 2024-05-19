@@ -115,5 +115,12 @@ Administrator
  - Username: Marker
  - Passowrd: Marker
 
+## References
 
+This project includes code and implementation generated with the assistance of GitHub Copilot, OpenAI's ChatGPT, and Stack Overflow.
+
+**Citation:**
+GitHub Copilot. "AI-Powered Code Suggestions." GitHub Copilot, GitHub, 2024.
+ChatGPT, OpenAI. "Flask Application Development Code Assistance." ChatGPT, OpenAI, 2024.
+Stack Overflow. "Community-driven Q&A and Code Solutions." Stack Overflow, Stack Exchange Inc., 2024.
 
