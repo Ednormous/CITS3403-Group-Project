@@ -12,7 +12,12 @@ with app.app_context():
     # delete the account
     if existing_user:
         db.session.delete(existing_user)
-        
+
     admin = User(username='admin', password='admin', email='', role='admin')
     db.session.add(admin)
     db.session.commit()
+
+
+# This page includes code generated with the assistance of git-hub copilot & ChatGTP
+
+# **Citation:** ChatGPT, OpenAI, 2024.

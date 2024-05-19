@@ -10,3 +10,7 @@ migrate = Migrate(app, db)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
+
+# This page includes code generated with the assistance of git-hub copilot & ChatGTP
+
+# **Citation:** ChatGPT, OpenAI, 2024.
