@@ -1,9 +1,10 @@
-from unittest import TestCase #add_test_data_to_db
+from unittest import TestCase  # add_test_data_to_db
 from flask import url_for
 from src import create_app, socketio, db
 from src.models import User
 from config import TestConfig
 from src.test_data import add_test_user_to_db
+
 
 class BasicTest(TestCase):
 
@@ -25,6 +26,7 @@ class BasicTest(TestCase):
         dbUser = User.query.filter_by(username='wesdutton').first()
 
         self.assertIsNotNone(dbUser)
+
 
         self.assertEqual(dbUser.username, 'wesdutton')
         self.assertEqual(dbUser.password, 'pleasework')
@@ -51,3 +53,7 @@ class BasicTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Contact', response.data)
 
+
+# This page includes code generated with the assistance of git-hub copilot & ChatGTP
+
+# **Citation:** ChatGPT, OpenAI, 2024.

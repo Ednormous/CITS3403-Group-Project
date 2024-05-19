@@ -5,9 +5,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from src import create_app, db
 from config import TestConfig
-from src.test_data import add_test_user_to_db  
+from src.test_data import add_test_user_to_db
 
 localHost = "http://localhost:5000"
+
 
 class SeleniumTestCase(TestCase):
 

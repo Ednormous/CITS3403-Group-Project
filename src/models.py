@@ -1,6 +1,5 @@
 # Creating the database models for the application
-from src import db 
-#from .database import db ---------------------------------------------------------------------------------------------------------
+from src import db
 from flask_login import UserMixin
 from datetime import datetime
 # Creating table for database
@@ -44,4 +43,6 @@ class Message(db.Model):
     def __repr__(self):
         return f'<Message "{self.content}" by User ID {self.user_id}>'
 
+# This page includes code generated with the assistance of git-hub copilot & ChatGTP
 
+# **Citation:** ChatGPT, OpenAI, 2024.

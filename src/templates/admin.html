@@ -1,40 +1,348 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Admin</title>
-  </head>
-  <body>
-    <h1>Admin</h1>
-    <p>Welcome to the admin page!</p>
+{% extends "base.html" %}
 
-    <br>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-        </tr>
-        {% for user in users %}
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    .search-container {
+      width: 80%;
+      margin: 20px 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .search-container input {
+      padding: 10px;
+      margin-right: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .table-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 80%;
+      max-height: 400px;
+      overflow-y: auto;
+      margin: 20px 0;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #bfbfbf;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: #f2f2f2;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #ffffff;
+    }
+
+    tr:hover {
+      background-color: #d9ffd9;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      margin-left: 10px;
+    }
+
+    .delete-form, .edit-form {
+      display: inline-block;
+      margin: 0 5px;
+    }
+
+    .delete-form button, .edit-form button {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .delete-form button:hover, .edit-form button:hover {
+      background-color: #ff1a1a;
+    }
+
+    .edit-form button {
+      background-color: #4CAF50;
+    }
+
+    .edit-form button:hover {
+      background-color: #45a049;
+    }
+
+    /* Styling for the forum cards */
+    .unit-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 100%;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+      color: black;
+      width: 200px;
+    }
+
+    .card:hover {
+      background-color: #a0d468;
+      transform: translateY(-5px);
+    }
+
+    .card-title {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+
+    .card-code {
+      font-weight: bold;
+    }
+
+    .section-separator {
+      width: 80%;
+      border-top: 2px solid #ccc;
+      margin: 20px 0;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>Admin</h1>
+      <p>Welcome to the admin page!</p>
+
+      <br>
+      <div class="search-container">
+        <input type="text" id="search_id" placeholder="Search by ID">
+        <input type="text" id="search_username" placeholder="Search by Username">
+        <input type="text" id="search_email" placeholder="Search by Email">
+        <input type="text" id="search_role" placeholder="Search by Role">
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
             <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="user-table-body">
+            {% for user in users %}
+              <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.role }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+                <td>
+                  <div class="action-buttons">
+                    <form class="edit-form" action="{{ url_for('main.edit_user', user_id=user.id) }}" method="get">
+                      <button type="submit">Edit</button>
+                    </form>
+                    <form class="delete-form" action="{{ url_for('main.delete_user', user_id=user.id) }}" method="post">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button type="submit">Delete</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
 
-    <h3> Add Users </h3><br>
-    <form action="/create_user" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="email">Email:</label><br>
-        <input type="text" id="email" name="email"><br>
-        <label for="role">Role:</label><br>
-        <input type="text" id="role" name="role"><br>
+      <h3>Add Users</h3>
+      <br>
+      <form action="{{ url_for('main.create_user') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <label for="role">Role:</label>
+        <input type="text" id="role" name="role">
         <input type="submit" value="Create User">
-    </form>
-    
+      </form>
+
+      <hr class="section-separator">
+
+      <h1>View Unit Forums</h1>
+      <div class="unit-container">
+        <a class="card" href="{{ url_for('main.message_board', class_id='CITS1401') }}">
+          <div class="card-title">Introduction to Python</div>
+          <div class="card-code">CITS1401</div>
+        </a>
+        <a class="card" href="{{ url_for('main.message_board', class_id='CITS2401') }}">
+          <div class="card-title">Data Science Essentials</div>
+          <div class="card-code">CITS2401</div>
+        </a>
+        <a class="card" href="{{ url_for('main.message_board', class_id='CITS3401') }}">
+          <div class="card-title">Web Development</div>
+          <div class="card-code">CITS3401</div>
+        </a>
+        <a class="card" href="{{ url_for('main.message_board', class_id='MATH1001') }}">
+          <div class="card-title">Pre-Calculus</div>
+          <div class="card-code">MATH1001</div>
+        </a>
+        <a class="card" href="{{ url_for('main.message_board', class_id='ENGL1001') }}">
+          <div class="card-title">Historical Literature</div>
+          <div class="card-code">ENGL1001</div>
+        </a>
+      </div>
+
+      <hr class="section-separator">
+
+      <h1>Manage Units</h1>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Unit ID</th>
+              <th>Unit Name</th>
+              <th>Tutor ID</th>
+              <th>Timetable</th>
+              <th>Enrollments</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="unit-table-body">
+            {% for unit in units %}
+              <tr>
+                <td>{{ unit.unit_id }}</td>
+                <td>{{ unit.unit_name }}</td>
+                <td>{{ unit.tutor_id }}</td>
+                <td>{{ unit.timetable }}</td>
+                <td>{{ unit.enrollments }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <form class="delete-form" action="{{ url_for('main.delete_unit', unit_id=unit.unit_id) }}" method="post">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button type="submit">Delete</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Add Unit</h3>
+      <br>
+      <form action="{{ url_for('main.create_unit') }}" method="post">
+        <label for="unit_name">Unit Name:</label>
+        <input type="text" id="unit_name" name="unit_name">
+        <label for="tutor_id">Tutor ID:</label>
+        <input type="text" id="tutor_id" name="tutor_id">
+        <label for="timetable">Timetable:</label>
+        <input type="text" id="timetable" name="timetable">
+        <label for="enrollments">Enrollments:</label>
+        <input type="text" id="enrollments" name="enrollments">
+        <input type="submit" value="Create Unit">
+      </form>
+    </div>
+    <br>
+    <br>
+    <br>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchInputs = document.querySelectorAll('.search-container input');
+
+        searchInputs.forEach(input => {
+          input.addEventListener('input', function() {
+            const searchParams = {
+              id: document.getElementById('search_id').value,
+              username: document.getElementById('search_username').value,
+              email: document.getElementById('search_email').value,
+              role: document.getElementById('search_role').value
+            };
+
+            fetch(`/admin_search?id=${searchParams.id}&username=${searchParams.username}&email=${searchParams.email}&role=${searchParams.role}`)
+              .then(response => response.json())
+              .then(data => {
+                const userTableBody = document.getElementById('user-table-body');
+                userTableBody.innerHTML = '';
+
+                data.users.forEach(user => {
+                  const userRow = document.createElement('tr');
+
+                  userRow.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.role}</td>
+                    <td>
+                      <div class="action-buttons">
+                        <form class="edit-form" action="/edit_user/${user.id}" method="get">
+                          <button type="submit">Edit</button>
+                        </form>
+                        <form class="delete-form" action="/delete_user/${user.id}" method="post">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <button type="submit">Delete</button>
+                        </form>
+                      </div>
+                    </td>
+                  `;
+
+                  userTableBody.appendChild(userRow);
+                });
+              });
+          });
+        });
+      });
+    </script>
   </body>
-</html>
+{% endblock %}
+
+
+<!-- ChatGPT has been used to generate the script for live updates for search feature and debugging and creation of partial CSS-->
+
+  <!-- This page includes code generated with the assistance of git-hub copilot & ChatGTP -->
+
+  <!-- **Citation:** ChatGPT, OpenAI, 2024. -->

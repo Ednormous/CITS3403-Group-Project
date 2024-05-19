@@ -2,8 +2,9 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+
 class Config(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'we_love_writing_programs_123'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
 #Deployment App
@@ -17,3 +18,7 @@ class TestConfig(Config):
     SERVER_NAME = "localhost:5000"
     TESTING = True
 
+
+# This page includes code generated with the assistance of git-hub copilot & ChatGTP
+
+# **Citation:** ChatGPT, OpenAI, 2024.

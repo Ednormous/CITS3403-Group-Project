@@ -34,3 +34,9 @@ def load_user(id):
     return User.query.get(int(id))
 
 from src import models #removed routes & added to blueprints.py
+
+
+
+# This page includes code generated with the assistance of git-hub copilot & ChatGTP 
+
+# **Citation:** ChatGPT, OpenAI, 2024.
