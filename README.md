@@ -67,6 +67,8 @@ The Administrator dashboard is specific to the administrator from the enterprise
 ### Future Release
 - Tutor:
   - Access and manage personal timetables. (not yet implemented)
+  - Enable permissions to access a students email/phone number.
+  - Generate questionares and polls in the message board
 
 - Message Board:
    - Restrict student access to enrolled courses only.
@@ -96,7 +98,7 @@ To test the functionalities of the app,
 
 ## For Project Markers
 
-Temporary administration and tutor logins have been provided for the assessment. These login details will be removed on completion of marking.
+A temporary administration login has been provided for the assessment. These login details will be removed on completion of marking.
 Feel free to register as a student in order to assess the application capabilites as a client of Tuition Talks.
 
 Administrator
@@ -104,7 +106,4 @@ Administrator
  - Passowrd: Marker
  - Email: Marker@tuitiontalks.com
 
-Tutor
- - Username: Tutor
- - Password: Tutor
- - Email: Tutor@tuitiontalks.com
+
