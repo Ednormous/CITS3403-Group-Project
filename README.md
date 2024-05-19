@@ -96,7 +96,15 @@ To test the functionalities of the app,
 
 ## For Project Markers
 
-A temporary administration login has been hardcoded into the database enabling assessment of Administrator functions. These login details will be removed on completion of marking.
+Temporary administration and tutor logins have been provided for the assessment. These login details will be removed on completion of marking.
+Feel free to register as a student in order to assess the application capabilites as a client of Tuition Talks.
+
+Administrator
  - Username: Marker
  - Passowrd: Marker
- - Email: Marker@Marker.com
+ - Email: Marker@tuitiontalks.com
+
+Tutor
+ - Username: Tutor
+ - Password: Tutor
+ - Email: Tutor@tuitiontalks.com
