@@ -64,7 +64,7 @@ The Administrator dashboard is specific to the administrator from the enterprise
   - Communicate with tutors for academic inquiries 
 
 
-### Future Release
+### Future Releases
 - Tutor:
   - Access and manage personal timetables. (not yet implemented)
   - Enable permissions to access a students email/phone number.
