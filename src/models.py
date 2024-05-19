@@ -1,6 +1,6 @@
 # Creating the database models for the application
-from src import db 
-#from .database import db ---------------------------------------------------------------------------------------------------------
+from src import db
+# from .database import db ---------------------------------------------------------------------------------------------------------
 from flask_login import UserMixin
 from datetime import datetime
 # Creating table for database
@@ -16,22 +16,6 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String(20), nullable=False)
     email_verified = db.Column(db.Boolean, nullable=False, default=False)
 
-# TODO Link the user detail table to the user table and allow users to finalise their account details within their account detail.
-
-
-# class user_detail(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-#     firstName = db.Column(db.String(20), nullable=False)
-#     lastName = db.Column(db.String(20), nullable=False)
-
-
-# Table to store enrolments
-# class Enrolment(db.Model):
-#     enrolment_id = db.Column(db.Integer, primary_key=True)
-#     student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-#     class_id = db.Column(db.Integer, db.ForeignKey('class.class_id'), nullable=False)
-# Table to store classes
 
 class Units(db.Model):
     unit_id = db.Column(db.Integer, primary_key=True)
@@ -60,13 +44,6 @@ class Message(db.Model):
     def __repr__(self):
         return f'<Message "{self.content}" by User ID {self.user_id}>'
 
+# This page includes code generated with the assistance of git-hub copilot & ChatGTP
 
-# Table to store timetables
-# class Timetable(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     day = db.Column(db.String(20), nullable=False)
-#     time = db.Column(db.String(20), nullable=False)
-#     class_name = db.Column(db.String(100), nullable=False)
-#     tutor = db.Column(db.String(100), nullable=False)
-
-# TODO Create a View for users to individually view their own timetables
+# **Citation:** ChatGPT, OpenAI, 2024.

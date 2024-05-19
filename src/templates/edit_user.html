@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block content %}
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        form {
+            width: 300px;
+            text-align: left;
+        }
+
+        form label, form input {
+            display: block;
+            margin: 10px 0;
+        }
+
+        form input[type="submit"] {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+  <body>
+    <div class="container">
+        <h1>Edit User</h1>
+        <form action="{{ url_for('main.update_user', user_id=user.id) }}" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" value="{{ user.email }}">
+            <label for="role">Role:</label>
+            <input type="text" id="role" name="role" value="{{ user.role }}">
+            <input type="submit" value="Update User">
+        </form>
+    </div>
+  </body>
+{% endblock %}
+
+
+
+<!-- This page includes code generated with the assistance of git-hub copilot & ChatGTP -->
+
+<!-- **Citation:** ChatGPT, OpenAI, 2024. -->

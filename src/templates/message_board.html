@@ -171,38 +171,25 @@
                 display: flex;
                 justify-content: start;
                 align-items: center;
+                font-weight: bold;
             }
 
             .message-user, .message-label {
                 margin-right: 10px;
+                font-weight: bold;
+                font-size: 1rem;
             }
         </style>
     </head>
 
     <body>
-        <!-- TODO -->
-        <!-- Navigation bar not working -->
-        <!-- The hierarchy of the DOM is not working with the js -->
-        <!-- TODO -->
-
-
-        <!-- <nav>
-            <div class="nav-left">
-                <a href="#" class="nav-button">Dashboard</a>
-            </div>
-            <div class="nav-center">
-                <span id="unitCode">{{ class_id }} Dashboard</span>
-            </div>
-            <div class="nav-right">
-                <span>Welcome {{ current_user.username }}</span>
-            </div>
-        </nav> -->
+        
 
         <!-- Main container -->
         <div id="message-board">
             <h2><span id="unitCode">{{ class_id }}</span> Message Thread</h2>
             <br/>
-
+            <!-- search bar for searching the database for past messages -->
             <div class="container-search" id="searchbar">
                 <form method="POST" action="{{ url_for('main.search')}}" class="d-flex">
                     {{ form.hidden_tag() }}
@@ -212,14 +199,14 @@
                 </form>
             </div>
 
-            <!-- message thread -->
+            <!-- message thread, populates all messages pertaining to a particular unit-->
             <ul id="messages">
                 <!-- loop through messages on server -->
                 {% for message in messages %}
                     {% if message.parent_id == None %}
                         <li data-message-id="{{ message.id }}" class="message-item">
                             <div class="message-header">
-                                <span class="message-user">{{ message.user.username }}</span>
+                                <span class="message-user">{{ message.user.username }}:</span>
                                 <span class="message-label">{{ message.label }}</span>
                             </div>
                             <div class="message-body">
@@ -229,7 +216,7 @@
                                     <button class="delete-btn" data-message-id="{{ message.id }}">Delete</button>
                                 {% endif %}
                             </div>
-                            <!-- reply container -->
+                            <!-- reply container allowing one nested reply to the main question being asked -->
                             <div>
                                 <ul class="replies">
                                     <!-- loop through replies on server -->

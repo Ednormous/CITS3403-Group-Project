@@ -1,4 +1,4 @@
-// // // this Js doc doc handles the client-side for the message board and communicates to the backend server and database/
+// // // this Js doc doc handles the client-side for the message board and communicates via websocket to the flask backend server and database
 
 // Waits for the entire documnet to load before going on to execute the script
 document.addEventListener('DOMContentLoaded', () => {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function deleteMessage(messageId) {
         socket.emit('delete_message', { message_id: messageId });
     }
-    // Submit event handler for the message
+    // handles the form submission, sends the message and then clears the output and reloads page
     messageForm.addEventListener('submit', (event) => {
         event.preventDefault();
         // get values and trim white space
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Event handler for reply and delete
+    // Event handler for reply and delete buttons in message thread. dynamically creates reply form or deletes message onclick
     document.getElementById('messages').addEventListener('click', (event) => {
         // If reply 
         if (event.target.classList.contains('reply-btn')) {
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
     });
-    // event handler for recieving new message
+    // event handler for recieving new messages. listens for 'new_message' from server and creates dom elements to display
     socket.on('new_message', (data) => {
         const messageList = document.getElementById('messages');
         const messageItem = document.createElement('li');
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
     });
-    //  Delete event
+    //  Delete event handler, locates message in the DOM using message_id and removes it
     socket.on('message_deleted', (data) => {
         // locate message by message id and remove it from the dom
         const messageItem = document.querySelector(`[data-message-id='${data.message_id}']`);
