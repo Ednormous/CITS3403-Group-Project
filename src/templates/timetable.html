@@ -1,8 +1,56 @@
-{% extends "base.html" %}
-
-{% block title %}Timetable - AmazingEdu{% endblock %}
-
 {% block content %}
+    <style>
+        body {
+            background-color: #e8ebdc;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        
+        .timetable {
+            max-width: 1300px; /* Match the width of unit-container */
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .timetable-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .timetable-table th,
+        .timetable-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .timetable-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .timetable-table td {
+            background-color: #fafafa;
+        }
+
+        .notice {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+            text-align: center;
+        }
+    </style>
+
+    <h1>Semesters 1 timetable.....</h1>
     <section class="timetable">
         <h2>Class Timetable</h2>
         <table class="timetable-table">
@@ -18,15 +66,31 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>4:00pm-6:00pm</td>
-                    <td>CITS 1403<br> Lab Room 2<br>Tayla Reed</td>
+                    <td>4:00pm-5:00pm</td>
+                    <td>CITS 1403<br>Lab Room 2<br>Tayla Reed</td>
                     <td>MATH1001<br>Classroom 1<br>Michael Jenkins</td>
                     <td>CITS 2403<br>Lab Room 1<br>Tayla Reed</td>
                     <td>ENGL1001<br>Classroom 1<br>Michael Jenkins</td>
                     <td>CITS 3403<br>Lab Room 1<br>Tayla Reed</td>
                 </tr>
                 <tr>
-                    <td>6:00-7:30pm</td>
+                    <td>5:00pm-6:00pm</td>
+                    <td>CITS 2403<br>Lab Room 1<br>Tayla Reed</td>
+                    <td>ENGL1001<br>Classroom 1<br>Michael Jenkins</td>
+                    <td>CITS 3403<br>Lab Room 1<br>Tayla Reed</td>
+                    <td>CITS 1403<br>Lab Room 2<br>Tayla Reed</td>
+                    <td>MATH1001<br>Classroom 1<br>Michael Jenkins</td>
+                </tr>
+                <tr>
+                    <td>6:00pm-7:00pm</td>
+                    <td>ENGL1001<br>Classroom 1<br>Michael Jenkins</td>
+                    <td>CITS 1403<br>Lab Room 2<br>Tayla Reed</td>
+                    <td>MATH1001<br>Classroom 1<br>Michael Jenkins</td>
+                    <td>ENGL1001<br>Classroom 1<br>Michael Jenkins</td>
+                    <td>CITS 3403<br>Lab Room 1<br>Tayla Reed</td>
+                </tr>
+                <tr>
+                    <td>7:00pm-8:00pm</td>
                     <td colspan="5">Consultation and 1-on-1 session availability</td>
                 </tr>
             </tbody>
@@ -36,3 +100,5 @@
         </p>
     </section>
 {% endblock %}
+
+<!-- Citation: This code includes assistance from ChatGPT, OpenAI, 2024. -->
