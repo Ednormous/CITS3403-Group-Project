@@ -127,52 +127,13 @@ def register():
             db.session.add(user)
             db.session.commit()
 
-            # userDetail = user_detail(user_id=user.id, firstName=retrieved_first_name, lastName=retrieved_last_name)
-            # db.session.add(userDetail)
-            # db.session.commit()
-
             # Indicates regisration was successful
             flash('Registration successful.', category='success')
             return redirect(url_for('main.login'))
-            # !!!!!!!!!!!!!!!!!!!!!!!!!!!! #
-            # The following does not work
-
-            # # Redirects user to login page
-            # # TODO: Prompt user to verify their email address with a verification code
-            # token = s.dumps(retrieved_email, salt='email-confirm-salt')
-            # confirm_url = url_for('main.confirm_email', token=token, _external=True)
-
-            # # Send email to user
-            # msg = Message('Confirm your Email', recipients=[retrieved_email])
-            # msg.body = f'Click the link to confirm your email: {confirm_url}'
-            # try:
-            #     mail.send(msg)
-            #     flash('Please verify your account.', category='success')
-            # except Exception as e:
-            #     print(e)
-            #     flash('Failed to send email. Please try again later.',
-            #           category='error')
-            #     return redirect(url_for('main.register'))
-            # return redirect(url_for(confirm_email))
-
+   
     #flash('Please fill out the form.', category='error')
     return render_template('register.html', form=form)
 
-
-# # The following would probably not be implemented
-# @main.route('/confirm_email/<token>')
-# def confirm_email(token):
-#     try:
-#         email = s.loads(token, salt='email-confirm-salt', max_age=3600)
-#         user = User.query.filter_by(email=email).first()
-#         user.email_verified = True
-#         db.session.commit()
-#         flash('Email confirmed.', category='success')
-#     except SignatureExpired:
-#         flash('The confirmation link has expired.', category='error')
-#     return redirect(url_for('main.login'))
-
-# Forgot password page
 
 
 @main.route('/forgot-password')
@@ -243,19 +204,6 @@ def create_user():
     flash('User created successfully.', category='success')
     return redirect(url_for('main.admin'))
 
-
-# @main.route('/message_board')
-# def message_board():
-#     class_id = request.args.get('class_id')
-#     if not class_id:
-#         return "Class ID is required", 400  # Return an error or redirect as needed
-
-#     # Assuming 'unit_id' in 'Message' corresponds to 'class_id'
-#     messages = Message.query.filter_by(unit_id=class_id).all()
-
-#     return render_template('message_board.html', messages=messages, class_id=class_id)
-
-# from flask_login import current_user, login_required
 
 @main.route('/message_board')
 @login_required

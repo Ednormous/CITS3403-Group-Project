@@ -34,7 +34,7 @@ class SeleniumTestCase(TestCase):
         self.app_context.pop()
 
 
-
+    #This test is failing due to the ID's not being found.
     def test_register_page(self):
 
         self.driver.get(localHost + "/login")
