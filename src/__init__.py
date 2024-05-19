@@ -8,25 +8,22 @@ from flask_migrate import Migrate
 from config import Config
 
 
-
 db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 socketio = SocketIO()
 
-
 def create_app(config):
-    global s
     app = Flask(__name__)
     app.config.from_object(config)
 
-    db.init_app(app)
-    login_manager.init_app(app)
     socketio.init_app(app)
     
 
     from src.blueprints import main
     app.register_blueprint(main)
+    db.init_app(app)
+    login_manager.init_app(app)
     
 
     return app

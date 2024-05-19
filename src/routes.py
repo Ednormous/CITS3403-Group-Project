@@ -2,7 +2,6 @@
 
 from sqlite3 import Timestamp
 from src.models import Message
-# , main ---------------------------- This line is not needed
 from src import socketio, db
 from flask_login import current_user, login_required
 from flask import request, jsonify, abort
@@ -12,7 +11,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from flask_mail import Message
 from flask_socketio import emit
-# from src import mail, s        #, main, db, socketio duplicates & added blueprint to resolve circular import p
 from src.blueprints import main
 from src.models import User, Message, Units
 from datetime import datetime
@@ -125,13 +123,15 @@ def register():
             db.session.add(user)
             db.session.commit()
 
+            # Indicates regisration was successful
             flash('Registration successful.', category='success')
             return redirect(url_for('main.login'))
-
+   
+    #flash('Please fill out the form.', category='error')
     return render_template('register.html', form=form)
 
 
-# Not yet implemented (future release)
+
 @main.route('/forgot-password')
 def forgot_password():
     return render_template('forgot-password.html')
@@ -360,7 +360,6 @@ def create_user():
     return redirect(url_for('main.admin'))
 
 
-# message board class id filter
 @main.route('/message_board')
 @login_required
 def message_board():
@@ -385,10 +384,11 @@ def base():
 
 @main.route('/search', methods=['POST'])
 def search():
-    form = searchForm()
-    messages = Message.query
-    if form.validate_on_submit():
-        # Get data from submitted form
+   #Extract form data
+   form = searchForm()
+   messages = Message.query
+   if form.validate_on_submit():
+        #Get data from submitted form
         Message.searched = form.searched.data
         # Query the database of messages
         messages = messages.filter(
@@ -399,10 +399,10 @@ def search():
                                form=form,
                                searched=Message.searched,
                                messages=messages)
-
-    messages = messages
-
-    return render_template('search.html', form=form, messages=messages)
+   
+   messages = messages
+   #if form not validated, return search page.
+   return render_template('search.html', form=form, messages=messages)
 
 
 @main.route('/profile')

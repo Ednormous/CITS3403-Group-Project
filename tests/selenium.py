@@ -1,5 +1,5 @@
-import multiprocessing
-from time import time
+import threading
+from time import sleep
 from unittest import TestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -13,33 +13,45 @@ localHost = "http://localhost:5000"
 class SeleniumTestCase(TestCase):
 
     def setUp(self):
-        testApp = create_app(TestConfig)
-        self.app_context = testApp.app_context()
+        self.testApp = create_app(TestConfig)
+        self.app_context = self.testApp.app_context()
         self.app_context.push()
         db.create_all()
 
-        self.server_process = multiprocessing.Process(target=self.testApp.run)
-        self.server_process.start()
+        #Replaced multiprocessing with threading to avoid pickling issue.
+        self.server_thread = threading.Thread(target=self.testApp.run, kwargs={"use_reloader":False})
+        self.server_thread.start()
 
-        self.driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless=new")
+        self.driver = webdriver.Chrome(options=options)
         self.driver.get(localHost)
 
     def tearDown(self):
+        self.testApp.do_teardown_appcontext()
+        self.driver.close()
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
 
-        self.server_process.terminate()
-        self.driver.close()
 
-    def test_home_page(self):
-        time.sleep(10)
-        self.assertTrue(True)
+    #This test is failing due to the ID's not being found.
+    def test_register_page(self):
 
-        loginElement = self.driver.find_element(By.ID, "login")
+        self.driver.get(localHost + "/login")
+        sleep(1)    
+
+        loginElement = self.driver.find_element(By.ID, "username")
         loginElement.send_keys("wesdutton")
 
+        loginElement = self.driver.find_element(By.ID, "password")
+        loginElement.send_keys("wesdutton")
 
-# This page includes code generated with the assistance of git-hub copilot & ChatGTP
-
-# **Citation:** ChatGPT, OpenAI, 2024.
+        submitElement = self.driver.find_element(By.ID, "submit")
+        submitElement.click()
+        
+        sleep(1)
+            
+        
+       
+        

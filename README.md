@@ -95,6 +95,7 @@ The Administrator dashboard is specific to the administrator from the enterprise
 
 ## Launch Instructions
 To run the app, simply enter in the terminal: 
+Set secret key via 'export SECRET_KEY='i_love_agile_web_dev'
 > python3 run.py
 **or**
 > python run.py
@@ -104,7 +105,11 @@ To run the app, simply enter in the terminal:
 
 ## Test Running Instructions
 
-To test the functionalities of the app, 
+To test the functionalities of the app, run the following code within the terminal.
+To run Unit.py
+> python -m unittest tests/unit.py
+Selenium.py
+> python -m unittest tests/selenium.py
 
 ## For Project Markers
 

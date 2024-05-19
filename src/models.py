@@ -1,6 +1,5 @@
 # Creating the database models for the application
 from src import db
-# from .database import db ---------------------------------------------------------------------------------------------------------
 from flask_login import UserMixin
 from datetime import datetime
 # Creating table for database
