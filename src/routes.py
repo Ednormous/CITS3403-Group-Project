@@ -112,8 +112,8 @@ def register():
             # Check if the email's domain is 'amazingEdu.com.au'
             domain = retrieved_email.split('@')[-1]
             print("detected domainn is: ", domain)
-            if domain == '123.com':  # TODO Make this editable via the admin page
-                r_role = 'tutor'
+            if domain == 'tuitiontalks.com':  # TODO Make this editable via the admin page
+                r_role = 'admin'
             else:
                 r_role = 'student'
 
