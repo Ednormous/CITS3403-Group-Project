@@ -96,9 +96,9 @@ The Administrator dashboard is specific to the administrator from the enterprise
 ## Launch Instructions
 To run the app, simply enter in the terminal: 
 Set secret key via 'export SECRET_KEY='i_love_agile_web_dev'
-> python3 run.py
+> python3 app.py
 **or**
-> python run.py
+> python app.py
 
 **Then** to go a modern web browser and enter http://127.0.0.1:5000
 
@@ -119,7 +119,7 @@ Feel free to register as a student in order to assess the application capabilite
 
 Administrator
  - Username: Marker
- - Passowrd: Marker
+ - Password: Marker
 
 ## References
 
