@@ -278,8 +278,9 @@ def base():
 #Create search function
 @main.route('/search', methods=['POST'])
 def search():
+   #Extract form data
    form = searchForm()
-   messages = Message.query 
+   messages = Message.query
    if form.validate_on_submit():
         #Get data from submitted form
         Message.searched = form.searched.data
@@ -293,7 +294,7 @@ def search():
                                messages=messages)
    
    messages = messages
-   
+   #if form not validated, return search page.
    return render_template('search.html', form=form, messages=messages)
 
 
