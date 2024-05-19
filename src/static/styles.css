@@ -705,3 +705,54 @@ img{
     vertical-align: middle;
     margin-right: 8px;
 }
+
+/* Timetable Page */
+.timetable-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
+.timetable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    table-layout: fixed; /* New chatline */
+}
+
+.timetable th, .timetable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    word-wrap: break-word; /* New chatline */
+}
+
+.timetable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.timetable td {
+    background-color: #fff;
+}
+
+.timetable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.timetable tr:hover {
+    background-color: #ddd;
+}
+/* New chatline */
+.timetable th:nth-child(1), .timetable td:nth-child(1) {
+    width: 15%;
+}
+
+.timetable th:nth-child(2), .timetable td:nth-child(2),
+.timetable th:nth-child(3), .timetable td:nth-child(3),
+.timetable th:nth-child(4), .timetable td:nth-child(4),
+.timetable th:nth-child(5), .timetable td:nth-child(5),
+.timetable th:nth-child(6), .timetable td:nth-child(6) {
+    width: 17%;
+}

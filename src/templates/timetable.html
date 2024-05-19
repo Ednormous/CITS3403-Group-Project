@@ -1,7 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-    <h1>
-        Your timetable:
-        
-    </h1>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Timetable - AmazingEdu{% endblock %}
+
+{% block content %}
+    <section class="timetable">
+        <h2>Class Timetable</h2>
+        <table class="timetable-table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>4:00pm-6:00pm</td>
+                    <td>CITS 1403, CITS 2403, CITS 3403<br> Lab Room 2<br>Tayla Reed</td>
+                    <td>MATH1001<br>Classroom 1<br>Michael Jenkins</td>
+                    <td>CITS 1403, CITS 2403, CITS 3403<br>Lab Room 1<br>Tayla Reed</td>
+                    <td>ENGL1001<br>Classroom 1<br>Michael Jenkins</td>
+                    <td>CITS 1403, CITS 2403, CITS 3403<br>Lab Room 1<br>Tayla Reed</td>
+                </tr>
+                <tr>
+                    <td>6:00-7:30pm</td>
+                    <td colspan="5">Consultation and 1-on-1 session availability</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="notice">  
+            Note: Classes may be subject to change or be cancelled, an email notification will be sent out in the event this occurs.
+        </p>
+    </section>
+{% endblock %}
