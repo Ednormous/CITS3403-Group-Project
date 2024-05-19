@@ -104,7 +104,11 @@ To run the app, simply enter in the terminal:
 
 ## Test Running Instructions
 
-To test the functionalities of the app, 
+To test the functionalities of the app, run the following code within the terminal.
+To run Unit.py
+> python -m unittest tests/unit.py
+Selenium.py
+> python -m unittest tests/selenium.py
 
 ## For Project Markers
 
