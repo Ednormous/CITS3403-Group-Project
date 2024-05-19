@@ -15,7 +15,7 @@
     </header>
     <div class="container">
         <aside class="sidebar">
-            <a href="{{ url_for('main.student', username=current_user.username) }}" class="nav-btn">Welcome</a>
+            <!-- <a href="{{ url_for('main.student', username=current_user.username) }}" class="nav-btn">Welcome</a> -->
             <a href="javascript:void(0);" class="nav-btn" data-url="{{ url_for('main.timetable') }}" onclick="loadContent(this)">Timetable</a>
             <a href="javascript:void(0);" class="nav-btn" data-url="{{ url_for('main.forums') }}" onclick="loadContent(this)">Forum</a>
         </aside>
