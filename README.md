@@ -108,6 +108,7 @@ Set secret key via 'export SECRET_KEY='i_love_agile_web_dev'
 To test the functionalities of the app, run the following code within the terminal.
 To run Unit.py
 > python -m unittest tests/unit.py
+**or**
 Selenium.py
 > python -m unittest tests/selenium.py
 
