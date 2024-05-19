@@ -81,8 +81,8 @@ The Administrator dashboard is specific to the administrator from the enterprise
 ## Application Architecture
 
    ### Frontend(Client-Side)
-   -   HTML/CSS/JavaScript is used for web page structure, styling and interactivity.
-   -   Flask Templates (jinja2) Allows dynamic interaction with the backend.
+   -   HTML/CSS/JavaScript: Used for web page structure, styling and interactivity.
+   -   Flask Templates (jinja2): Allows dynamic interaction with the backend.
    -   WebSocket: Establishes connectivity between client and server.
    -   Message Board: Dom manipulation handled by JS to update UI during user interactions.
 
