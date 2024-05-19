@@ -9,9 +9,10 @@ with app.app_context():
 
 # Create the admin user
     existing_user = User.query.filter_by(username='admin').first()
-    if not existing_user:
-        admin = User(username='admin', password='admin', email='', role='admin')
-        db.session.add(admin)
-        db.session.commit()
-    else:
-        print('User already exists.')
+    # delete the account
+    if existing_user:
+        db.session.delete(existing_user)
+        
+    admin = User(username='admin', password='admin', email='', role='admin')
+    db.session.add(admin)
+    db.session.commit()

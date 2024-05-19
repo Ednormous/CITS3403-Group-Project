@@ -16,8 +16,7 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String(20), nullable=False)
     email_verified = db.Column(db.Boolean, nullable=False, default=False)
 
-# TODO Link the user detail table to the user table and allow users to finalise their account details within their account detail.
-
+# TODO Link the user detail table to the user table and allow users to finalise their account details within their account detail. (future release)
 
 # class user_detail(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
@@ -26,7 +25,7 @@ class User(db.Model, UserMixin):
 #     lastName = db.Column(db.String(20), nullable=False)
 
 
-# Table to store enrolments
+#### TODO Table to store enrolments (future release)
 # class Enrolment(db.Model):
 #     enrolment_id = db.Column(db.Integer, primary_key=True)
 #     student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -61,6 +60,8 @@ class Message(db.Model):
         return f'<Message "{self.content}" by User ID {self.user_id}>'
 
 
+#### TODO Create a View for users to individually view their own timetables (future release)
+
 # Table to store timetables
 # class Timetable(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
@@ -69,4 +70,4 @@ class Message(db.Model):
 #     class_name = db.Column(db.String(100), nullable=False)
 #     tutor = db.Column(db.String(100), nullable=False)
 
-# TODO Create a View for users to individually view their own timetables
+
