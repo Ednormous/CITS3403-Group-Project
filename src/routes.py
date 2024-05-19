@@ -55,6 +55,9 @@ def login():
         # Query the database for the user
         user = User.query.filter_by(username=username).first()
 
+        if not user:
+            user = User.query.filter_by(email=username).first()
+
         # If credentials are correct, then redirect
         if user and check_password_hash(user.password, password):
             login_user(user, remember=remember)
