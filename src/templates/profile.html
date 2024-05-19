@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome Page</title>
+    <style>
+        .content-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: calc(100% - 40px); 
+            margin: 20px auto; 
+        }
+        body {
+            background-color: #e8ebdc;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome!</h1>
@@ -14,14 +29,19 @@
         Role: {{ current_user.role }}
     </h2>
     
-    <p>
-        Welcome to your User portal! From here, you can access your timetable and our message board where you can communicate with our team and other students enrolled in your course. 
-    </p>
-    <p>
-        Please check for updates to ensure the best learning outcomes.
-    </p>
-    <p>
-        We are excited to have you on board and look forward to supporting your learning journey.
-    </p>
+    <div class="content-box">
+        <p>
+            Welcome to your User portal! This is your central hub for all course-related activities and information. From here, you can access our weekly timetable, ensuring you stay on top of your class schedule.
+        </p>
+        <p>
+            Your portal features a dynamic message board. This is where you can communicate with members of our dedicated team and fellow students. Whether you have questions about course material, need assistance with assignments, or want to engage in academic discussions, the message board is your go-to place.
+        </p>
+        <p>
+            To maximize your learning experience we encourage you to regularly check for updates and announcements. Staying informed about the latest developments and scheduling will ensure you get the most from our service.
+        </p>
+        <p>
+            We are thrilled to have you as a part of our learning community. We look forward to accompanying you on your educational journey and helping you reach your academic goals.
+        </p>
+    </div>
 </body>
 </html>
