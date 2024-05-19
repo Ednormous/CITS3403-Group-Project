@@ -52,9 +52,8 @@ The Administrator dashboard is specific to the administrator from the enterprise
 - **Permissions**: Access to class-related functionalities and communication with students.
 - **Functions**:
   - Provide student feedback
-  - Access and manage personal timetables. (not yet implemented)
+  
 
-### Parent
 
 ### Student
 
@@ -65,6 +64,18 @@ The Administrator dashboard is specific to the administrator from the enterprise
   - Communicate with tutors for academic inquiries 
 
 
+### Future Release
+- Tutor:
+  - Access and manage personal timetables. (not yet implemented)
+
+- Message Board:
+   - Restrict student access to enrolled courses only.
+   - Allow pasting of rich text and images.
+   - Enable message editing.
+   - Enable emoji response to message.
+   - Enable tagging users in specific posts.
+
+
 ## Application Architecture
 
 
@@ -72,9 +83,9 @@ The Administrator dashboard is specific to the administrator from the enterprise
 
 ## Launch Instructions
 To run the app, simply enter in the terminal: 
-> python3 app.py
+> python3 run.py
 **or**
-> python app.py
+> python run.py
 
 **Then** to go a modern web browser and enter http://127.0.0.1:5000
 
@@ -82,3 +93,10 @@ To run the app, simply enter in the terminal:
 ## Test Running Instructions
 
 To test the functionalities of the app, 
+
+## For Project Markers
+
+A temporary administration login has been hardcoded into the database enabling assessment of Administrator functions. These login details will be removed on completion of marking.
+ - Username: Marker
+ - Passowrd: Marker
+ - Email: Marker@Marker.com
