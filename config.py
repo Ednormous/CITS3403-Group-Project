@@ -16,3 +16,8 @@ class DeploymentConfig(Config):
 class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     TESTING = True
+
+
+# This page includes code generated with the assistance of git-hub copilot & ChatGTP
+
+# **Citation:** ChatGPT, OpenAI, 2024.
