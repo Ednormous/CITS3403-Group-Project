@@ -112,15 +112,6 @@ To run Unit.py
 Selenium.py
 > python -m unittest tests/selenium.py
 
-## For Project Markers
-
-A temporary administration login has been provided for the assessment. These login details will be removed on completion of marking.
-Feel free to register as a student in order to assess the application capabilites as a client of Tuition Talks.
-
-Administrator
- - Username: Marker
- - Password: Marker
-
 ## References
 
 This project includes code and implementation generated with the assistance of GitHub Copilot, OpenAI's ChatGPT, and Stack Overflow.
